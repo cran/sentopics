@@ -20,6 +20,12 @@ test_that("as.tokens.dfm works", {
   expect_silent(rJST <- rJST(dfm))
   expect_silent(sentopicmodel <- sentopicmodel(dfm))
   expect_identical(as.tokens(dfm, tokens = toks), toks)
+  
+  dfm <- quanteda::dfm(ECB_press_conferences_tokens)
+  toks <- as.tokens.dfm(dfm)
+  expect_identical(nrow(dfm), length(toks))
+  expect_identical(colnames(dfm), quanteda::types(toks))
+  expect_equal(quanteda::rowSums(dfm), quanteda::ntoken(toks))
 })
 
 
@@ -135,4 +141,17 @@ test_that("mergeTopics works", {
   proportion_topics(merged, period = "day")
 })
 
+test_that("rebuild counts from posterior works", {
+  rjst <- rJST(ECB_press_conferences_tokens)
+  rjst <- grow(rjst, 10, displayProgress = FALSE)
+  rjst <- as.sentopicmodel(rjst)
+  expect_equal(rebuild_zd_from_posterior(rjst), rebuild_zd(rjst))
+  expect_equal(rebuild_zw_from_posterior(rjst), rebuild_zw(rjst))
+  
+  lda <- LDA(ECB_press_conferences_tokens)
+  lda <- grow(lda, 10, displayProgress = FALSE)
+  lda <- as.sentopicmodel(lda)
+  expect_equal(rebuild_zd_from_posterior(lda), rebuild_zd(lda))
+  expect_equal(rebuild_zw_from_posterior(lda), rebuild_zw(lda))
+})
 

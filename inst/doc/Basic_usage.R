@@ -8,7 +8,7 @@ knitr::opts_chunk$set(
 )
 
 ## -----------------------------------------------------------------------------
-library(sentopics)
+library("sentopics")
 data("ECB_press_conferences_tokens")
 print(ECB_press_conferences_tokens, 3)
 head(docvars(ECB_press_conferences_tokens))
@@ -44,9 +44,14 @@ merged <- mergeTopics(lda, list(
 ))
 merged
 
-## -----------------------------------------------------------------------------
-plot(lda)
+## ---- eval=FALSE--------------------------------------------------------------
+#  plot(lda)
 
-## -----------------------------------------------------------------------------
-plot(merged)
+## ---- eval=FALSE, include=FALSE-----------------------------------------------
+#  suppressWarnings({
+#    plotly::save_image(plot(lda), file = "plotly1.svg")
+#  })
+
+## ----include=FALSE------------------------------------------------------------
+knitr::include_graphics("plotly1.svg")
 

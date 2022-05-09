@@ -105,7 +105,7 @@ print.topWords <- function(x, ...) {
 #' @return A `plotly` sunburst chart.
 #'
 #' @export
-#' @seealso [topWords()]
+#' @seealso [topWords()] [LDAvis()]
 #' @examples 
 #' lda <- LDA(ECB_press_conferences_tokens)
 #' lda <- grow(lda, 100)
@@ -255,178 +255,211 @@ plot.multiChains <- function(x, ..., method = c("euclidean", "hellinger", "cosin
 
 #' Estimate a topic model
 #'
-#' @author Olivier Delmarcelle
-#'
 #' @description This function is used to estimate a topic model created by
-#'   [LDA()], [JST()] or [rJST()]. In essence, this function
-#'   iterates a Gibbs sampler MCMC.
+#'   [LDA()], [JST()] or [rJST()]. In essence, this function iterates a Gibbs
+#'   sampler MCMC.
 #'
-#' @param x a model created with the [LDA()], [JST()] or [rJST()] function
-#' @param iterations the number of iterations by which the model should be grown
-#' @param nChains if set above 1, the model will be grown into multiple chains
+#' @param x a model created with the [LDA()], [JST()] or [rJST()] function.
+#' @param iterations the number of iterations by which the model should be
+#'   grown.
+#' @param nChains if set above 1, the model will be grown into multiple chains.
 #'   from various starting positions. Latent variables will be re-initialized if
 #'   `x` has not been grown before.
-#' @param nCores if `nChains` is greater than 1, this allows to compute the the
-#'   multiple chains in a parallel setting
 #' @param displayProgress if `TRUE`, a progress bar will be displayed indicating
-#'   the progress of the computation. Disabled when `nChains` is greater than 1.
-#' @param computeLikelihood boolean. If set to FALSE, does not compute the
-#'   likelihood at each iteration. This can slightly decrease the computing
-#'   time.
-#' @param seed for reproducibility, a seed can be provided
+#'   the progress of the computation. When `nChains` is greater than 1, this
+#'   requires the package \pkg{progressr} and optionally \pkg{progress}.
+#' @param computeLikelihood if set to `FALSE`, does not compute the likelihood
+#'   at each iteration. This can slightly decrease the computing time.
+#' @param seed for reproducibility, a seed can be provided.
 #'
 #' @return a `sentopicmodel` of the relevant model class if `nChains` is
 #'   unspecified or equal to 1. A `multiChains` object if `nChains` is greater
 #'   than 1.
+#'
+#' @section Parallelism: When `nChains > 1`, the function can take advantage of
+#'   [future.apply::future_lapply] (if installed) to spread the computation over
+#'   multiple processes. This requires the specification of a parallel strategy
+#'   using [future::plan()]. See the examples below.
 #'
 #' @seealso [LDA()], [JST()], [rJST()], [reset()]
 #' @export
 #' @examples
 #' model <- rJST(ECB_press_conferences_tokens)
 #' grow(model, 10)
-grow <- function(x, iterations = 100, nChains = 1, nCores = 1, displayProgress = TRUE, computeLikelihood = TRUE, seed = NULL) {
+#'
+#' # -- Parallel computation --
+#' require(future.apply)
+#' future::plan("multisession", workers = 2) # Set up 2 workers
+#' grow(model, 10, nChains = 2)
+#'
+#' future::plan("sequential") # Shut down workers
+grow <- function(x, iterations = 100, nChains = 1, displayProgress = TRUE, computeLikelihood = TRUE, seed = NULL) {
   UseMethod("grow")
 }
 #' @export
-grow.LDA <- function(x, iterations = 100, nChains = 1, nCores = 1, displayProgress = TRUE, computeLikelihood = TRUE, seed = NULL) {
+grow.LDA <- function(x, iterations = 100, nChains = 1, displayProgress = TRUE, computeLikelihood = TRUE, seed = NULL) {
+  if (isTRUE(attr(x, "approx"))) stop("Not possible for approximated models")
   as.LDA(grow(as.sentopicmodel(x),
             iterations = iterations,
             nChains = nChains,
-            nCores = nCores,
             displayProgress = displayProgress,
             computeLikelihood = computeLikelihood,
             seed = seed))
 }
 #' @export
-grow.rJST <- function(x, iterations = 100, nChains = 1, nCores = 1, displayProgress = TRUE, computeLikelihood = TRUE, seed = NULL) {
+grow.rJST <- function(x, iterations = 100, nChains = 1, displayProgress = TRUE, computeLikelihood = TRUE, seed = NULL) {
   as.rJST(grow(as.sentopicmodel(x),
               iterations = iterations,
               nChains = nChains,
-              nCores = nCores,
               displayProgress = displayProgress,
               computeLikelihood = computeLikelihood,
               seed = seed))
 }
 #' @export
-grow.JST <- function(x, iterations = 100, nChains = 1, nCores = 1, displayProgress = TRUE, computeLikelihood = TRUE, seed = NULL) {
+grow.JST <- function(x, iterations = 100, nChains = 1, displayProgress = TRUE, computeLikelihood = TRUE, seed = NULL) {
   as.JST(grow(as.sentopicmodel(x),
               iterations = iterations,
               nChains = nChains,
-              nCores = nCores,
               displayProgress = displayProgress,
               computeLikelihood = computeLikelihood,
               seed = seed))
 }
-## TODO: importFrom is temporary, because doRNG calls %dopar% in the current environment. ImportFrom is needed until fix.
-#' @importFrom foreach `%dopar%`
 #' @export
-grow.sentopicmodel <- function(x, iterations = 100, nChains = 1, nCores = 1, displayProgress = TRUE, computeLikelihood = TRUE, seed = NULL) {
-
+grow.sentopicmodel <- function(x, iterations = 100, nChains = 1,
+                               displayProgress = TRUE, computeLikelihood = TRUE,
+                               seed = NULL) {
+  start_time <- Sys.time()
+  
   ## force deep copy
   x <- data.table::copy(x)
-
+  
   if (nChains == 1) {
     if (!is.null(seed)) set.seed(seed * (x$it + 1))
     ## rebuild c++ model
-    base <- core(x)
+    base <- core(x) ## need to protect base$cleaned from gc
     cpp_model <- rebuild_cppModel(x, base)
-
     cpp_model$iterate(iterations, displayProgress, computeLikelihood)
-
     tmp <- extract_cppModel(cpp_model, base)
     x[names(tmp)] <- tmp
-
     reorder_sentopicmodel(x)
   } else if (nChains > 1) {
-
+    
+    ## CMD check
+    chains <- NULL
+    
     base <- core(x)
     core(x) <- NULL
-
-    ### maybe not the most proper way to do this but...
-    oopts <- options("doFuture.foreach.export" = ".export")
-
-    ## multiple chain setup is built based on parallel computation, if no back-end it will behave sequentially
-    doFuture::registerDoFuture()
-    if (nCores > 1) {
-      cl <- parallel::makeCluster(nCores)
-      oplan <- future::plan("cluster", workers = cl)
-      on.exit({
-        future::plan(oplan)
-        parallel::stopCluster(cl)
-        options(oopts)
-      })
-    } else {
-      on.exit(options(oopts))
-    }
-
-    if (!is.null(seed)) seed <- seed * (x$it + 1)
-
-    ## determine how often the progress bar is refreshed (too high refresh rate can negatively affect performance)
-    chunkProgress <- min(max((iterations * nChains/nCores) %/% 10, 10), 1000, iterations)
     
-    # if (displayProgress) progressr::handlers("progress") else progressr::handlers("void")
-    # progressr::with_progress({
-    # start_time <- Sys.time()
-    # p <- progressr::progressor(steps = nChains * ((iterations) * 1000 + 3))
-    chains <- doRNG::`%dorng%`(
-      foreach::foreach(i = 1:nChains, .packages = "sentopics",
-                       .export = c("x", "iterations", "chunkProgress", "base", "computeLikelihood"),
-                       .final = function(x) stats::setNames(x, paste0("chain", 1:nChains)),
-                       .options.RNG = seed),
-      {
-        # p(sprintf("Starting chain %d", i), class = "sticky", amount = 1)
-        
-        ## need to duplicate memory location of x$za. Otherwise, all chains
-        ## share the same memory location
-        x$za <- data.table::copy(x$za)
-        
-        rebuild_cppModel <- get("rebuild_cppModel",
-                                envir = getNamespace("sentopics"))
-        cpp_model <- rebuild_cppModel(x, base)
-        
-        ## generate different initial assignment for each chain
-        if (x$it == 0) cpp_model$initAssignments()
-        
-        
-        
-        for (j in seq((iterations) %/% chunkProgress)) {
-          cpp_model$iterate(chunkProgress, FALSE, computeLikelihood)
-          # p(
-          # message = sprintf("Elapsed time: %g", round(as.numeric(Sys.time() - start_time, units = "secs"), 0)),
-          # amount = chunkProgress * 1000
-          # )
+    if (!is.null(seed)) seed <- seed * (x$it + 1)
+  
+    FUN <- function(i) {
+      report_time <- Sys.time()
+      report_processed <- 0L
+      
+      ## need to duplicate memory location of x$za. Otherwise, all chains
+      ## share the same memory location
+      x$za <- data.table::copy(x$za)
+      rebuild_cppModel <- get("rebuild_cppModel",
+                              envir = getNamespace("sentopics"))
+      cpp_model <- rebuild_cppModel(x, base)
+      ## generate different initial assignment for each chain
+      if (x$it == 0 & i > 1) cpp_model$initAssignments()
+      if (iterations > 0) {
+        for (chunk in c(rep(chunkProgress, iterations %/% chunkProgress),
+                        iterations %% chunkProgress)) {
+          cpp_model$iterate(chunk, FALSE, computeLikelihood)
+          
+          report_processed <- report_processed + chunk
+          if ((Sys.time() - report_time) > 1) { # not too often
+            difftime <- difftime(Sys.time(), start_time)
+            p(amount = report_processed,
+              message = sprintf("Elapsed: %.2f %s", difftime, units(difftime)))
+            report_time <- Sys.time()
+            report_processed <- 0L
+          }
         }
-        if ((iterations) %% chunkProgress != 0) {
-          cpp_model$iterate((iterations) %% chunkProgress, FALSE, computeLikelihood)
-          # p(
-          # message = sprintf("Elapsed time: %g", round(as.numeric(Sys.time() - start_time, units = "secs"), 0)), ### TODO: test difftime(Sys.time(), t1, units = "sec")
-          # amount = ((iterations) %% chunkProgress) * 1000
-          # )
-        }
-        
-        extract_cppModel <- get("extract_cppModel",
-                                envir = getNamespace("sentopics"))
-        tmp <- extract_cppModel(cpp_model, base)
-        x[names(tmp)] <- tmp
-        
-        x
-      })
-    class(chains) <- "multiChains"
-    attr(chains, "nChains") <- nChains
-    attr(chains, "base") <- base
-    attr(chains, "containedClass") <- "sentopicmodel"
+      }
 
+      if (report_processed > 0L) { # if remaining update
+        difftime <- difftime(Sys.time(), start_time)
+        p(amount = report_processed,
+          message = sprintf("Elapsed: %.2f %s", difftime, units(difftime)))
+      }
+      
+      extract_cppModel <- get("extract_cppModel",
+                              envir = getNamespace("sentopics"))
+      tmp <- extract_cppModel(cpp_model, base)
+      x[names(tmp)] <- tmp
+      x
+    }
+    
+    expr <- quote({
+      if (requireNamespace("future.apply", quietly = TRUE)) {
+        if (is.null(seed)) seed <- TRUE
+        environment(FUN) <- globalenv()
+        chains <- future.apply::future_lapply(
+          1:nChains, FUN,  future.seed = seed, future.globals = list(
+            x = x, base = base, iterations = iterations,
+            chunkProgress = chunkProgress,
+            computeLikelihood = computeLikelihood,
+            p = p, start_time = start_time))
+      } else {
+        if (requireNamespace("future", quietly = TRUE)) {
+          if (!inherits(class(future::plan()), "sequential"))
+            message("It seems that a parallel setup is registered, but `future.apply` is not installed. Did you omit installing it? Proceeding sequential computation...")
+        }
+        ## TODO: align RNGs? 
+        if (!is.null(seed)) set.seed(seed)
+        chains <- lapply(1:nChains, FUN)
+      }
+      
+      names(chains) <- paste0("chain", 1:nChains)
+      class(chains) <- "multiChains"
+      attr(chains, "nChains") <- nChains
+      attr(chains, "base") <- base
+      attr(chains, "containedClass") <- "sentopicmodel"
+    })
+    
+    if (displayProgress & !requireNamespace("progressr", quietly = TRUE)) {
+      message("The `progressr` package is required to track progress of multiple chains.")
+      displayProgress <- FALSE
+    }
+      
+    if (displayProgress) { 
+      ## determine how often the progress bar is refreshed (too high refresh rate can negatively affect performance)
+      # chunkProgress <- min(max((iterations * nChains) %/% 10, 10), 1000, iterations)
+      chunkProgress <- min(100, iterations)
+      progressr::with_progress({
+        p <- progressr::progressor(steps = nChains * iterations + 0.001, enable = displayProgress)
+        eval(expr)
+        difftime <- difftime(Sys.time(), start_time)
+        p(message = sprintf("Done! Elapsed: %.2f %s",
+                            difftime, units(difftime)),
+          amount = 0.001)
+        },
+        handlers = custom_handler())
+    } else {
+      chunkProgress <- iterations
+      p <- function(...) {}
+      environment(p) <- globalenv()
+      eval(expr)
+    }
+    
     chains
   } else {
     stop("Incorrect number of chains specified.")
   }
 }
 
+
 #' @export
-grow.multiChains <- function(x, iterations = 100, nChains = NULL, nCores = 1,
+grow.multiChains <- function(x, iterations = 100, nChains = NULL,
                              displayProgress = TRUE, computeLikelihood = TRUE,
                              seed = NULL) {
+  start_time <- Sys.time()
   
+  ## CMD check
+  chains <- NULL
   
   nChains <- attr(x, "nChains")
   base <- attr(x, "base")
@@ -439,71 +472,94 @@ grow.multiChains <- function(x, iterations = 100, nChains = NULL, nCores = 1,
   for (i in seq_along(x)) {
     x[[i]][["L1post"]] <- x[[i]][["L2post"]] <- x[[i]][["phi"]] <- NULL
   }
-
-  ### maybe not the most proper way to do this but...
-  oopts <- options("doFuture.foreach.export" = ".export")
-
-  names <- names(x)[1:nChains]
-  doFuture::registerDoFuture()
-  if (nCores > 1) {
-    cl <- parallel::makeCluster(nCores)
-    oplan <- future::plan("cluster", workers = cl)
-    on.exit({
-      future::plan(oplan)
-      parallel::stopCluster(cl)
-      options(oopts)
-    })
-  } else {
-    on.exit(options(oopts))
-  }
-  ## determine how often is the progress bar refreshed ## note that a refresh rate too high can negatively affect performance
-  chunkProgress <- min(max((iterations*nChains/nCores) %/% 10, 10), 1000, iterations)
-
+  
   if (!is.null(seed)) seed <- seed * (x[[1]]$it + 1)
-
-  # if (displayProgress) progressr::handlers("progress") else progressr::handlers("void")
-  # progressr::with_progress({
-  # start_time <- Sys.time()
-  # p <- progressr::progressor(steps = nChains * ((iterations) * 1000 + 3))
-  chains <- doRNG::`%dorng%`(
-    foreach::foreach(x = x, i = 1:nChains, .packages = "sentopics",
-                     .export = c("iterations", "chunkProgress", "base", "computeLikelihood"),
-                     .final = function(x) stats::setNames(x, paste0("chain", 1:nChains)),
-                     .options.RNG = seed),
-    {
-      # p(sprintf("Starting chain %d", i), class = "sticky", amount = 1)
-      rebuild_cppModel <- get("rebuild_cppModel",
-                              envir = getNamespace("sentopics"))
-      cpp_model <- rebuild_cppModel(x, base)
+  
+  FUN <- function(x) {
+    report_time <- Sys.time()
+    report_processed <- 0L
+    
+    rebuild_cppModel <- get("rebuild_cppModel",
+                            envir = getNamespace("sentopics"))
+    cpp_model <- rebuild_cppModel(x, base)
+    
+    for (chunk in c(rep(chunkProgress, iterations %/% chunkProgress),
+                    iterations %% chunkProgress)) {
+      cpp_model$iterate(chunk, FALSE, computeLikelihood)
       
-      for (j in seq((iterations) %/% chunkProgress)) {
-        cpp_model$iterate(chunkProgress, FALSE, computeLikelihood)
-        # p(
-        #   message = sprintf("Elapsed time: %g", round(as.numeric(Sys.time() - start_time, units = "secs"), 0)),
-        #   amount = chunkProgress * 1000
-        # )
+      report_processed <- report_processed + chunk
+      if ((Sys.time() - report_time) > 1) { # not too often
+        difftime <- difftime(Sys.time(), start_time)
+        p(amount = report_processed,
+          message = sprintf("Elapsed: %.2f %s", difftime, units(difftime)))
+        report_time <- Sys.time()
+        report_processed <- 0L
       }
-      if ((iterations) %% chunkProgress != 0) {
-        cpp_model$iterate((iterations) %% chunkProgress, FALSE, computeLikelihood)
-        # p(
-        #   message = sprintf("Elapsed time: %g", round(as.numeric(Sys.time() - start_time, units = "secs"), 0)), ### TODO: test difftime(Sys.time(), t1, units = 'sec')
-        #   amount = ((iterations) %% chunkProgress) * 1000
-        # )
+    }
+    if (report_processed > 0L) { # if remaining update
+      difftime <- difftime(Sys.time(), start_time)
+      p(amount = report_processed,
+        message = sprintf("Elapsed: %.2f %s", difftime, units(difftime)))
+    }
+    
+    extract_cppModel <- get("extract_cppModel",
+                            envir = getNamespace("sentopics"))
+    tmp <- extract_cppModel(cpp_model, base)
+    x[names(tmp)] <- tmp
+    x
+  }
+  
+  expr <- quote({
+    if (requireNamespace("future.apply", quietly = TRUE)) {
+      if (is.null(seed)) seed <- TRUE
+      environment(FUN) <- globalenv()
+      chains <- future.apply::future_lapply(
+        x, FUN, future.seed = seed, future.globals = list(
+          x = x, base = base, iterations = iterations,
+          chunkProgress = chunkProgress,
+          computeLikelihood = computeLikelihood,
+          p = p, start_time = start_time))
+    } else {
+      if (requireNamespace("future", quietly = TRUE)) {
+        if (!inherits(class(future::plan()), "sequential"))
+          message("It seems that a parallel setup is registered, but `future.apply` is not installed. Did you omit installing it? Proceeding sequential computation...")
       }
-      
-      extract_cppModel <- get("extract_cppModel",
-                              envir = getNamespace("sentopics"))
-      tmp <- extract_cppModel(cpp_model, base)
-      x[names(tmp)] <- tmp
-      
-      x
-    })
-  class(chains) <- "multiChains"
-  attr(chains, "nChains") <- nChains
-  attr(chains, "base") <- base
-  attr(chains, "containedClass") <- containedClass
-  names(chains) <- names
-
+      ## TODO: align RNGs? 
+      if (!is.null(seed)) set.seed(seed)
+      chains <- lapply(x, FUN)
+    }
+    
+    class(chains) <- "multiChains"
+    attr(chains, "nChains") <- nChains
+    attr(chains, "base") <- base
+    attr(chains, "containedClass") <- containedClass
+  })
+  
+  if (displayProgress & !requireNamespace("progressr", quietly = TRUE)) {
+    message("The `progressr` package is required to track progress of multiple chains.")
+    displayProgress <- FALSE
+  }
+  
+  if (displayProgress) { 
+    ## determine how often the progress bar is refreshed (too high refresh rate can negatively affect performance)
+    # chunkProgress <- min(max((iterations * nChains) %/% 10, 10), 1000, iterations)
+    chunkProgress <- min(100, iterations)
+    progressr::with_progress({
+      p <- progressr::progressor(steps = nChains * iterations + 0.001, enable = displayProgress)
+      eval(expr)
+      difftime <- difftime(Sys.time(), start_time)
+      p(message = sprintf("Done! Elapsed: %.2f %s",
+                          difftime, units(difftime)),
+        amount = 0.001)
+    },
+    handlers = custom_handler())
+  } else {
+    chunkProgress <- iterations
+    p <- function(...) {}
+    environment(p) <- globalenv()
+    eval(expr)
+  }
+  
   chains
 }
 
@@ -538,10 +594,11 @@ reset <- function(x) {
   x$logLikelihood <- NULL
   x$phi <- x$L2post <- x$L1post <- NULL
   
-  cpp_model <- rebuild_cppModel(x, core(x))
+  base <- core(x) ## need to protect base$cleaned from gc
+  cpp_model <- rebuild_cppModel(x, base)
   cpp_model$initAssignments()
   # x <- utils::modifyList(x, extract_cppModel(cpp_model, core(x)))
-  tmp <- extract_cppModel(cpp_model, core(x))
+  tmp <- extract_cppModel(cpp_model, base)
   x[names(tmp)] <- tmp
   
   
@@ -718,13 +775,24 @@ melt.sentopicmodel <- function(data, ..., include_docvars = FALSE) {
 }
 
 #' @export
-`as.list.multiChains` <- function(x, ...) {
-  res <- list()
+`as.list.multiChains` <- function(x, copy = TRUE, ...) {
+  x <- unclass(x)
   for (i in seq_along(x)) {
-    res[[i]] <- data.table::copy(x[[i]])
+    if (copy) core(x[[i]]) <- data.table::copy(attr(x, "base"))
+    else core(x[[i]]) <- attr(x, "base")
   }
-  names(res) <- names(x)
-  res
+  
+  fun <- get(paste0("as.", attr(x, "containedClass")))
+  x[] <- lapply(x, function(xi) fun(reorder_sentopicmodel(xi)))
+  attr(x, "base") <- NULL
+  x
+  
+  # res <- list()
+  # for (i in seq_along(x)) {
+  #   res[[i]] <- data.table::copy(x[[i]])
+  # }
+  # names(res) <- names(x)
+  # res
 }
 
 

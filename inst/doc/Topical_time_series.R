@@ -8,9 +8,9 @@ knitr::opts_chunk$set(
 )
 
 ## ----message=FALSE------------------------------------------------------------
-library(xts)
-library(data.table)
-library(sentopics)
+library("xts")
+library("data.table")
+library("sentopics")
 data("ECB_press_conferences_tokens")
 head(docvars(ECB_press_conferences_tokens))
 set.seed(123)
@@ -22,7 +22,19 @@ head(sentopics_sentiment(lda))
 xts_sent <- sentiment_series(lda, period = "month", rolling_window = 6)
 plot(xts_sent)
 
-## -----------------------------------------------------------------------------
+## ----eval = FALSE-------------------------------------------------------------
+#  lda <- grow(lda, 1000)
+#  sentopics_labels(lda) <- list(
+#    topic = c(
+#      "Economic growth & Inflation", "Banking", "Payment services",
+#      "European single market", "Monetary policy & Negative rate",
+#      "Monetary policy & Price stability", "Others", "Banking supervision",
+#      "Financial markets"
+#    )
+#  )
+#  plot(lda)
+
+## ----include=FALSE------------------------------------------------------------
 lda <- grow(lda, 1000)
 sentopics_labels(lda) <- list(
   topic = c(
@@ -32,7 +44,14 @@ sentopics_labels(lda) <- list(
     "Financial markets"
   )
 )
-plot(lda)
+
+## ----eval = FALSE, include=FALSE----------------------------------------------
+#  suppressWarnings({
+#    plotly::save_image(plot(lda), file = "plotly2.svg")
+#  })
+
+## ----echo = FALSE-------------------------------------------------------------
+knitr::include_graphics("plotly2.svg")
 
 ## -----------------------------------------------------------------------------
 document_datas <- sentopics::melt(lda, include_docvars = TRUE)

@@ -5,7 +5,7 @@
 #' @description This function initialize a Latent Dirichlet Allocation model.
 #'
 #' @references Blei, D.M., Ng, A.Y. and Jordan, M.I. (2003). [Latent Dirichlet
-#'   Allocation](https://www.jmlr.org/papers/volume3/blei03a/blei03a.pdf).
+#'   Allocation](http://www.cs.columbia.edu/~blei/papers/BleiNgJordan2003.pdf).
 #'   *Journal of Machine Learning Research*, 3, 993--1022.
 #'
 #' @inherit rJST
@@ -92,6 +92,7 @@ rJST.LDA <- function(x,
                      gamma = 5, ...) {
   
   if (x$it < 1) stop("Requires an estimated LDA model.")
+  if (isTRUE(attr(x, "approx"))) stop("Not possible for approximated models")
   x <- as.sentopicmodel(x)
   x$L2 <- as.numeric(S)
   
@@ -136,7 +137,7 @@ rJST.LDA <- function(x,
   for (i in 1:nrow(x$vocabulary)) {
     if (!is.na(x$vocabulary$lexicon[i])) {
       zero <- setdiff(1:x$L2, as.integer(x$vocabulary$lexicon[i]))
-      zeros <- sapply(zero, function(j) j + (1:x$L1 - 1) * x$L2, USE.NAMES = FALSE) |> c()
+      zeros <- c(sapply(zero, function(j) j + (1:x$L1 - 1) * x$L2, USE.NAMES = FALSE))
       beta[zeros, i] <- 0
     }
   }

@@ -72,9 +72,13 @@ check_integrity <- function(x, detailed = FALSE, fast = TRUE) {
   if (!identical(dim(x$L2prior), as.integer(c(x$L1 * x$L2, 1)))) stop("Internal error in dimensions of priors.")
   if (!identical(dim(x$beta), as.integer(c(x$L1 * x$L2, length(quanteda::types(x$tokens)))))) stop("Internal error in dimensions of priors.")
 
-  tmp <- unlist(x$za, use.names = FALSE, recursive = FALSE)
-  zaRange <- c(min(tmp), max(tmp))
-  zaFlag <- zaRange[1] >= 1 && zaRange[2] <= (x$L1 * x$L2)
+  if (!is.null(x$za)) {
+    tmp <- unlist(x$za, use.names = FALSE, recursive = FALSE)
+    zaRange <- c(min(tmp), max(tmp))
+    zaFlag <- zaRange[1] >= 1 && zaRange[2] <= (x$L1 * x$L2) 
+  } else {
+    zaFlag <- TRUE
+  }
 
   ## can do twice faster using rcpp if ever needed..
   # //[[Rcpp::export(rng = false)]]
@@ -131,6 +135,7 @@ check_integrity <- function(x, detailed = FALSE, fast = TRUE) {
 }
 
 reorder_sentopicmodel <- function(x) {
+  approx <- isTRUE(attr(x, "approx"))
   x <- as.sentopicmodel(x)
   if (is.null(attr(x, "reversed"))) stop("Object corrupted, missing reversed attribute.")
   reversed <- attr(x, "reversed")
@@ -139,16 +144,16 @@ reorder_sentopicmodel <- function(x) {
   if (!is.null(x$IGNORE_CHECK)) return(x)
   x <- x[c("tokens", "vocabulary", "L1", "L2", "L1prior", "L2prior", "beta",
            "it",
-           "za",
-           # "zw", "zd",
+           if (approx) c("zd", "zw") else "za",
            "L1post", "L2post", "phi",
            "logLikelihood",
            "initLDA", "smooth", "L1cycle", "L2cycle")]
   x <- x[!sapply(x, is.null)]
-  class(x) <- c("sentopicmodel", "cLDA")
+  class(x) <- c("sentopicmodel")
   attr(x, "reversed") <- reversed
   attr(x, "Sdim") <- Sdim
   attr(x, "labels") <- labels
+  if (approx) attr(x, "approx") <- approx
   if (!check_integrity(x)) stop("Internal error when reordering the sentopicmodel object.") # this has an impact on subsetting performance.. consider removing or optimizing
   x
 }
@@ -179,15 +184,61 @@ core <- function(x) {
 }
 
 rebuild_zd <- function(x) {
+  if (!is.null(x$zd) & length(x$zd) > 0) return(x$zd)
   wrapper_cpp_rebuild_zd(x$za, x$L1 * x$L2)
 }
-rebuild_zw <- function(x, base = core(x), array = FALSE) {
-  zw <- wrapper_cpp_rebuild_zw(cleanPadding(base$tokens), x$za, x$L1 * x$L2, nrow(base$vocabulary))
-  if (array) array(zw, dim = c(x$L2, x$L1, nrow(base$vocabulary))) else zw
+rebuild_L1d_from_posterior <- function(doc.length, L1post, L1prior) {
+  #### L1 frequencies from L1 post and L1 prior
+  L1D <- t(sapply(1:nrow(L1post), function(i) {
+    L1post[i, ] * (doc.length[i] + sum(L1prior)) - c(L1prior)},
+    USE.NAMES = FALSE))
+  L1D
+}
+rebuild_L2d_from_posterior <- function(L1D, L2post, L2prior) {
+  L1 <- ncol(L1D)
+  L2 <- dim(L2post)[1]
+  D <- nrow(L1D)
+  #### L2 frequencies from L1D, L2 post and L2 prior
+  
+  L2post <- L2post
+  dim(L2post) <- c(L1 * L2, D)
+  L2post <- t(L2post)
+  L1D_extended <- rep(t(L1D), each = L2)
+  dim(L1D_extended) <- c(L1 * L2, D)
+  L1D_extended <- t(L1D_extended)
+  L2sum_extended <-
+    rep(tapply(L2prior, rep(1:L1, each = L2), sum), each = L2)
+  L2D <- t(sapply(1:nrow(L2post), function(i) {
+    L2post[i, ] * (L1D_extended[i, ] + L2sum_extended) - c(L2prior)},
+    USE.NAMES = FALSE))
+}
+rebuild_zd_from_posterior <- function(x) {
+  doc.length = lengths(cleanPadding(x$tokens))
+  L1D <- rebuild_L1d_from_posterior(doc.length, x$L1post, x$L1prior)
+  L2D <- rebuild_L2d_from_posterior(L1D, x$L2post, x$L2prior)
+  t(unname(L2D))
 }
 
-
-
+rebuild_zw <- function(x, base = core(x), array = FALSE) {
+  if (!is.null(x$zw) & length(x$zw) > 0) zw <- x$zw
+  else zw <- wrapper_cpp_rebuild_zw(base$cleaned, x$za,
+                                    x$L1 * x$L2, nrow(base$vocabulary))
+  if (array) array(zw, dim = c(x$L2, x$L1, nrow(base$vocabulary))) else zw
+}
+rebuild_zw_from_posterior <- function(x) {
+  rebuild_zw_from_posterior2(rebuild_zd_from_posterior(x), x$phi, x$beta)
+}
+rebuild_zw_from_posterior2 <- function(zd, phi, beta) {
+  #### WORD FREQUENCIES FROM PHI
+  zd_sum <- rowSums(zd)
+  Z <- nrow(zd)
+  D <- ncol(zd)
+  dim(phi) <- c(nrow(phi), Z)
+  zw <- t(sapply(1:Z, function(i) {
+    phi[, i] * (zd_sum[i] + sum(beta[i, ])) - c(beta[i, ])},
+    USE.NAMES = FALSE))
+  unname(zw)
+}
 
 
 # Posterior computations --------------------------------------------------
@@ -364,7 +415,7 @@ invariantEuclideanOptim <- function(multiChains, L1 = multiChains[[1]]$L1,
   FUN_aggregate <- get(match.arg(FUN_aggregate))
   # if (S == 1) stop("invariantEuclidan is undefined for non-JST models.")
   strict <- TRUE
-  if (all(is.na(multiChains$vocabulary$lexicon)) && L2 > 1) {
+  if (all(is.na(multiChains[[1]]$vocabulary$lexicon)) && L2 > 1) {
     message("No lexicon detected, allowing permutations over sentiment labels.")
     strict <- FALSE
   }
@@ -578,7 +629,7 @@ floor_date <- function(x, period = c("day", "month", "quarter", "year")) {
   x <- as.POSIXlt(x)
   switch(period,
          week48 = {
-           d <- as.integer(ceiling(date$mday / 7))
+           d <- as.integer(ceiling(x$mday / 7))
            x$mday <- ifelse(d == 5L, 4L, d) * 7L
          },
          month = x$mday <- rep_len(1, length(x)),
@@ -723,11 +774,15 @@ recompileVocabulary <- function(x) {
   x$logLikelihood <- NULL
   x$phi <- x$L2post <- x$L1post <- NULL
 
-  cpp_model <- rebuild_cppModel(x, core(x))
-  cpp_model$initBetaLex(stats::median(x$beta))
+  base <- core(x)
+  cpp_model <- rebuild_cppModel(x, base)
+  beta <- stats::median(x$beta)
+  if (isTRUE(all.equal(beta, 0)))
+    beta <- utils::head(unique(x$beta[x$beta > 0]), 1)
+  if (length(beta) == 0) beta <- 0.01
+  cpp_model$initBetaLex(beta)
   cpp_model$initAssignments()
-  # x <- utils::modifyList(x, extract_cppModel(cpp, core(x)))
-  tmp <- extract_cppModel(cpp_model, core(x))
+  tmp <- extract_cppModel(cpp_model, base)
   x[names(tmp)] <- tmp
 
   x$beta <- cpp_model$beta
@@ -762,6 +817,16 @@ reorder_func <- function(x, sep = "___") {
 
 
 # Experimental ---------------------------------------------------------
+
+custom_handler <- function() {
+  if (requireNamespace("progress", quietly = TRUE)) {
+    progressr::handler_progress(
+      format = ":spin [:bar] :percent :message",
+      width = 60, clear = FALSE)
+  } else {
+    progressr::handler_txtprogressbar(width = 60, clear = FALSE)
+  }
+}
 
 makeVocabulary <- function(toks, dictionary, S) {
   

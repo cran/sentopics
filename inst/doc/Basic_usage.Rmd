@@ -26,7 +26,7 @@ The package is shipped with a sample of press conferences from the European Cent
 The press conferences were obtained from [ECB's website](https://www.ecb.europa.eu/press/key/html/index.en.html). The package also provides an helper function to replicate the creation of the dataset: `get_ECB_press_conferences()`
 
 ```{r}
-library(sentopics)
+library("sentopics")
 data("ECB_press_conferences_tokens")
 print(ECB_press_conferences_tokens, 3)
 head(docvars(ECB_press_conferences_tokens))
@@ -101,18 +101,23 @@ merged <- mergeTopics(lda, list(
 ))
 merged
 ```
+
 Note that merging topics is only useful for presentation purpose. Using again `grow` on a model with merged topics will drastically change the results as the current state of the model does not results from a standard estimation with the merged set of parameters.
 
 Provided that the `plotly` package is installed, one can also directly use `plot()` on the estimated topic model to enjoy a dynamic view of topic proportions and their most probable words (presented as a screenshot hereafter to limit this vignette's size).
 
-```{r}
+```{r, eval=FALSE}
 plot(lda)
 ```
 
-
-```{r}
-plot(merged)
+```{r, eval=FALSE, include=FALSE}
+suppressWarnings({
+  plotly::save_image(plot(lda), file = "plotly1.svg")
+})
 ```
 
+```{r include=FALSE}
+knitr::include_graphics("plotly1.svg")
+```
 
 
