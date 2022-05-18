@@ -1,6 +1,6 @@
-07eb6a0aec5731457d26e159cfbf7b83 *DESCRIPTION
+7713df35c204a904e7a7aa4620a9d95b *DESCRIPTION
 9a4602271ea2051aac800ff0b3e82cad *NAMESPACE
-841fc6c23de889233cb9b95397097bd5 *NEWS.md
+730d90eedc51ce7bad933eb5014e1d96 *NEWS.md
 f39db2203617c067de89ca244bdf11f3 *R/RcppExports.R
 2d1d354c5c20a30a521046628de286dd *R/coherence.R
 3ab061194a04af1e6246ff40812c0864 *R/conversions.R
@@ -82,7 +82,7 @@ d4f81901c986ab3b2c352c7879ae2c0a *src/polya_fit_simple.h
 5f4ad0b42b55569dd86d5390cf3418a2 *tests/testthat/test-algorithm.R
 9320e18f56fd9cea90267f715dade0bf *tests/testthat/test-basic.R
 89aed00c88e7122347bc8b453863bb49 *tests/testthat/test-coherence.R
-fc78c9ffb5f44b76d572d85ed02f661c *tests/testthat/test-conversions.R
+b3c4ba3088aa94311aa48fcb9eeb3df7 *tests/testthat/test-conversions.R
 5869ef4a0f9a5a84bc755150a5c60e7b *tests/testthat/test-generation.R
 8575221f241f7c2774cfdcafaf3b32db *tests/testthat/test-others.R
 8db42ad19aba98541deef5f199a7e718 *tests/testthat/test-parallel_chains.R

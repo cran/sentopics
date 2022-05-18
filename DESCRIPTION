@@ -1,8 +1,8 @@
 Package: sentopics
 Type: Package
 Title: Tools for Joint Sentiment and Topic Analysis of Textual Data
-Version: 0.7.0
-Date: 2022-05-09
+Version: 0.7.1
+Date: 2022-05-17
 Authors@R: c(
   person("Olivier", "Delmarcelle", email = "delmarcelle.olivier@gmail.com", role = c("aut", "cre"), comment = c(ORCID = "0000-0003-4347-070X")),
   person("Samuel", "Borms", email = "samuel.borms@unine.ch", role = c("ctb"), comment = c(ORCID = "0000-0001-9533-1870")),
@@ -43,7 +43,7 @@ LazyData: true
 SystemRequirements: C++11
 VignetteBuilder: knitr
 NeedsCompilation: yes
-Packaged: 2022-05-08 22:45:05 UTC; Olivier
+Packaged: 2022-05-17 14:42:17 UTC; odlmarce
 Author: Olivier Delmarcelle [aut, cre]
     (<https://orcid.org/0000-0003-4347-070X>),
   Samuel Borms [ctb] (<https://orcid.org/0000-0001-9533-1870>),
@@ -54,4 +54,4 @@ Author: Olivier Delmarcelle [aut, cre]
   Julia Silge [cph] (Implementation of reorder_within(),
     <https://orcid.org/0000-0002-3671-836X>)
 Repository: CRAN
-Date/Publication: 2022-05-09 07:10:02 UTC
+Date/Publication: 2022-05-18 13:20:02 UTC
