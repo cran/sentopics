@@ -51,19 +51,28 @@
 #'                                    100, ## Num iterations
 #'                                    0.1,
 #'                                    0.1)
-#' LDA <- as.LDA_lda(lda, cora.documents, alpha = .1, eta = .1)
+#' LDA <- as.LDA_lda(lda, docs = cora.documents, alpha = .1, eta = .1)
 #'
 #' ## topicmodels
 #' data("AssociatedPress", package = "topicmodels")
 #' lda <- topicmodels::LDA(AssociatedPress[1:20,],
 #'                         control = list(alpha = 0.1), k = 2)
-#' LDA <- as.LDA(lda, AssociatedPress[1:20,])
+#' LDA <- as.LDA(lda, docs = AssociatedPress[1:20,])
 #'
 #' ## seededlda
 #' library("seededlda")
 #' lda <- textmodel_lda(dfm(ECB_press_conferences_tokens),
 #'                      k = 6, max_iter = 100)
 #' LDA <- as.LDA(lda)
+#'
+#' ## keyATM
+#' library("keyATM")
+#' data(keyATM_data_bills, package = "keyATM")
+#' keyATM_docs <- keyATM_read(keyATM_data_bills$doc_dfm)
+#' out <- keyATM(docs = keyATM_docs, model = "base",
+#'               no_keyword_topics = 5,
+#'               keywords = keyATM_data_bills$keywords)
+#' LDA <- as.LDA(out, docs = keyATM_docs)
 #' }
 as.LDA <- function(x, ...) {
   UseMethod("as.LDA")
@@ -74,16 +83,16 @@ as.LDA.STM <- function(x, docs, ...) {
   ## TODO: better identification of priors
   ## mu + sigma for logistic-normal => translate to? using eta instead?
   ## prior for beta? 0?
-  
+
   K <- x$settings$dim$K
-  
+
   doc.length <- as.integer(unlist(lapply(docs, function(x) sum(x[2, ]))))
   theta <- x$theta
   theta_prior <- rep(0, ncol(theta))
-  
+
   zd <- rebuild_L1d_from_posterior(doc.length, theta, theta_prior)
   zd <- t(zd)
-  
+
   ## adjust zd to integer
   diff <- doc.length - as.integer(colSums(round(zd)))
   for (i in which(diff != 0)) {
@@ -97,12 +106,12 @@ as.LDA.STM <- function(x, docs, ...) {
   zd <- round(zd)
   storage.mode(zd) <- "integer"
   stopifnot(isTRUE(all.equal(colSums(zd), doc.length)))
-  
-  
+
+
   phi <- t(exp(x$beta$logbeta[[1]]))
   beta <- t(phi)
   beta[] <- .Machine$double.eps
-  
+
   ## adjust zw to integer
   zw <- rebuild_zw_from_posterior2(zd, phi, beta)
   diff <- x$settings$dim$wcounts$x - as.integer(colSums(round(zw)))
@@ -125,7 +134,7 @@ as.LDA.STM <- function(x, docs, ...) {
       if (deduct <= count) break
       else count <- count + 1
     }
-    zw[diff2 < 0][zw[diff2 < 0] > count] <- zw[diff2 < 0][zw[diff2 < 0] > count] - deduct 
+    zw[diff2 < 0][zw[diff2 < 0] > count] <- zw[diff2 < 0][zw[diff2 < 0] > count] - deduct
     diff2 <- as.integer(rowSums(zd) - rowSums(round(zw)))
   }
   diff <- x$settings$dim$wcounts$x - as.integer(colSums(round(zw)))
@@ -133,8 +142,8 @@ as.LDA.STM <- function(x, docs, ...) {
   storage.mode(zw) <- "integer"
   stopifnot(isTRUE(all.equal(colSums(zw), x$settings$dim$wcounts$x)))
   stopifnot(isTRUE(all.equal(rowSums(zw), rowSums(zd))))
-  
-  
+
+
   ## Attempt to recreate ZA (not working)
   # za <- rebuild_za_ARRAY(zd, zw)
   # za <- lapply(seq_along(docs), function(d) {
@@ -143,14 +152,14 @@ as.LDA.STM <- function(x, docs, ...) {
   #             rep(1:K, times = za[v, , d])
   #           }))
   # })
-  # 
+  #
   # which(x$vocab=="price")
   # t(za[786,,]) |> colSums()
   # zw[, 786]
-  # 
+  #
   # dw <- unname(convert(quanteda::dfm(tokens), "matrix")[, types(tokens)])
   # storage.mode(dw) <- "integer"
-  
+
   ## tokens
   build_tokens <- get("build_tokens", envir = getNamespace("quanteda"))
   make_docvars <- get("make_docvars", envir = getNamespace("quanteda"))
@@ -190,13 +199,13 @@ as.LDA.LDA_Gibbs <- function(x, docs, ...) {
   alpha <- x@alpha
   beta <- x@beta
   beta[] <- x@control@delta
-  
+
   tokens <- quanteda::as.tokens(quanteda::as.dfm(docs))
   vocabulary <- makeVocabulary(tokens, NULL, 1L)
-  
+
   za <- split(x@z, rep(seq_len(length(tokens)),
                        times = lengths(cleanPadding(tokens))))
-  
+
   LDA <- structure(list(
     tokens = vocabulary$toks,
     vocabulary = vocabulary$vocabulary,
@@ -210,7 +219,7 @@ as.LDA.LDA_Gibbs <- function(x, docs, ...) {
     logLikelihood = NULL
   ), class = c("LDA", "sentopicmodel"), reversed = TRUE, Sdim = "L2")
   LDA <- grow(LDA, 0, displayProgress = FALSE)
-  
+
   LDA
 }
 
@@ -220,16 +229,16 @@ as.LDA.LDA_VEM <- function(x, docs, ...) {
   K <- x@k
   alpha <- x@alpha
   alpha <- rep(alpha, K)
-  
+
   dfm <- quanteda::as.dfm(docs)
   tokens <- quanteda::as.tokens(dfm)
   dfm <- as.matrix(dfm)
   vocabulary <- makeVocabulary(tokens, NULL, 1L)
-  
+
   doc.length <- lengths(tokens, use.names = FALSE)
   zd <- rebuild_L1d_from_posterior(lengths(tokens), x@gamma, alpha)
   zd <- t(zd)
-  
+
   ## adjust zd to integer
   diff <- doc.length - as.integer(colSums(round(zd)))
   for (i in which(diff != 0)) {
@@ -243,11 +252,11 @@ as.LDA.LDA_VEM <- function(x, docs, ...) {
   zd <- round(zd)
   storage.mode(zd) <- "integer"
   stopifnot(isTRUE(all.equal(colSums(zd), doc.length)))
-  
+
   phi <- t(exp(x@beta))
   beta <- x@beta
   beta[] <- .Machine$double.eps
-  
+
   ## adjust zw to integer
   zw <- rebuild_zw_from_posterior2(zd, phi, beta)
   diff <- as.integer(colSums(dfm) - colSums(round(zw)))
@@ -270,7 +279,7 @@ as.LDA.LDA_VEM <- function(x, docs, ...) {
       if (deduct <= count) break
       else count <- count + 1
     }
-    zw[diff2 < 0][zw[diff2 < 0] > count] <- zw[diff2 < 0][zw[diff2 < 0] > count] - deduct 
+    zw[diff2 < 0][zw[diff2 < 0] > count] <- zw[diff2 < 0][zw[diff2 < 0] > count] - deduct
     diff2 <- as.integer(rowSums(zd) - rowSums(round(zw)))
   }
   diff <- as.integer(colSums(dfm)) - as.integer(colSums(round(zw)))
@@ -278,7 +287,7 @@ as.LDA.LDA_VEM <- function(x, docs, ...) {
   storage.mode(zw) <- "integer"
   stopifnot(isTRUE(all.equal(colSums(zw), unname(colSums(dfm)))))
   stopifnot(isTRUE(all.equal(rowSums(zw), rowSums(zd))))
-  
+
   LDA <- structure(list(
     tokens = vocabulary$toks,
     vocabulary = vocabulary$vocabulary,
@@ -294,32 +303,32 @@ as.LDA.LDA_VEM <- function(x, docs, ...) {
   ), class = c("LDA", "sentopicmodel"), reversed = TRUE, Sdim = "L2",
   approx = TRUE)
   LDA <- as.LDA(reorder_sentopicmodel(LDA))
-  
+
   LDA
 }
 
 #' @rdname as.LDA
 #' @export
 as.LDA.textmodel_lda <- function(x, ...) {
-  
+
   labels <- colnames(x$theta)
-  
+
   beta <- x$phi
   beta[] <- x$beta
   alpha <- rep(x$alpha, x$k)
-  
+
   tokens <- as.tokens(x$data)
   vocabulary <- makeVocabulary(tokens, NULL, 1L)
-  
+
   zd <- rebuild_L1d_from_posterior(lengths(cleanPadding(tokens)), x$theta, alpha)
   zd <- t(zd)
   zd <- round(zd)
   storage.mode(zd) <- "integer"
-  
+
   zw <- t(as.matrix(x$words))
   zw <- round(zw)
   storage.mode(zw) <- "integer"
-  
+
   LDA <- structure(list(
     tokens = vocabulary$toks,
     vocabulary = vocabulary$vocabulary,
@@ -335,7 +344,7 @@ as.LDA.textmodel_lda <- function(x, ...) {
   ), class = c("LDA", "sentopicmodel"), reversed = TRUE, Sdim = "L2",
   approx = TRUE, labels = list(L1 = colnames(x$theta)))
   LDA <- as.LDA(reorder_sentopicmodel(LDA))
-  
+
   LDA
 }
 
@@ -346,29 +355,29 @@ as.LDA_lda <- function(list, docs, alpha, eta) {
   zw <- list$topics
   zd <- list$document_sums
   vocab <- colnames(zw)
-  
+
   K <- nrow(zw)
-  
+
   build_tokens <- get("build_tokens", envir = getNamespace("quanteda"))
   make_docvars <- get("make_docvars", envir = getNamespace("quanteda"))
   tokens <- build_tokens(
     x = lapply(docs, function(doc) rep(doc[1, ] + 1L, times = doc[2, ])),
     types = colnames(zw),
     docvars = make_docvars(length(docs)))
-  
+
   stopifnot(isTRUE(all.equal(unname(lengths(cleanPadding(tokens))),
                              colSums(zd))))
-  
+
   za <- mapply(function(doc, assignments) rep(assignments + 1L, times = doc[2, ]),
                docs, list$assignments)
-  
+
   vocabulary <- makeVocabulary(tokens, NULL, 1L)
-  
+
   if (missing(alpha)) alpha <- 50/K
   if (missing(eta)) eta <- 0.01
   beta <- zw
   beta[] <- eta
-  
+
   LDA <- structure(list(
     tokens = vocabulary$toks,
     vocabulary = vocabulary$vocabulary,
@@ -382,9 +391,132 @@ as.LDA_lda <- function(list, docs, alpha, eta) {
     logLikelihood = NULL
   ), class = c("LDA", "sentopicmodel"), reversed = TRUE, Sdim = "L2")
   LDA <- grow(LDA, 0, displayProgress = FALSE)
-  
+
   LDA
 }
+
+
+
+#' @rdname as.LDA
+#' @export
+as.LDA.keyATM_output <- function(x, docs, ...) {
+  K = x$keyword_k + x$no_keyword_topics
+
+
+  labels <- colnames(x$theta)
+
+
+  alpha <- as.matrix(rep(utils::tail(x$values_iter$alpha_iter$alpha, 1), K))
+
+
+  tokens <- quanteda::as.tokens(docs$W_raw)
+  vocabulary <- makeVocabulary(tokens, NULL, 1L)
+
+  # Align keyATM phi to the new vocabulary order
+  reorder <- order(match(x$vocab,vocabulary$vocabulary$word))
+  x$vocab <- x$vocab[reorder]
+  stopifnot(identical(
+    vocabulary$vocabulary$word,
+    x$vocab
+  ))
+  x$phi <- x$phi[, reorder]
+  beta <- x$phi
+  beta[] <- x$priors$beta
+  stopifnot(identical(
+    order(match(x$vocab,vocabulary$vocabulary$word)),
+    seq(x$V)
+  ))
+
+  zd <- rebuild_L1d_from_posterior(lengths(cleanPadding(tokens)), x$theta, alpha)
+  zd <- unname(t(zd))
+  doc.length <- lengths(tokens, use.names = FALSE)
+
+  ## adjust zd to integer
+  diff <- doc.length - as.integer(colSums(round(zd)))
+  for (i in which(diff != 0)) {
+    while (diff[i] != 0L) {
+      possible <- zd[, i] > (-diff[i] - .5)
+      idx <- which.min( (zd[possible, i] - round(zd[possible, i])*diff[i] ))
+      zd[which(possible)[idx], i] <- zd[which(possible)[idx], i] + 1*sign(diff[i])
+      diff[i] <- as.integer(doc.length[i] - sum(round(zd[, i])))
+    }
+  }
+  zd <- round(zd)
+  diff2 <- as.integer(x$topic_counts - rowSums(zd))
+  ## quickly adjust second dimension
+  while (any(diff2 < 0)) {
+    count <- 1L;
+    while (TRUE) {
+      non_zero <- length(zd[diff2 < 0][zd[diff2 < 0] > count])
+      deduct <- ceiling(abs(min(diff2))/non_zero)
+      if (deduct <= count) break
+      else count <- count + 1
+    }
+    zd[diff2 < 0][zd[diff2 < 0] > count] <- zd[diff2 < 0][zd[diff2 < 0] > count] - deduct
+    diff2 <- as.integer(x$topic_counts - rowSums(zd))
+  }
+  diff <- doc.length - as.integer(colSums(round(zd)))
+  zd <- zd + stats::r2dtable(1, diff2, diff)[[1]]
+  storage.mode(zd) <- "integer"
+  stopifnot(isTRUE(all.equal(colSums(zd), doc.length)))
+  stopifnot(isTRUE(all.equal(rowSums(zd), x$topic_counts)))
+
+
+
+  phi <- t(x$phi)
+
+  ## adjust zw to integer
+  dfm <- quanteda::dfm(tokens)
+  dfm <- dfm[, vocabulary$vocabulary$word] # Ensure correct order
+  zw <- rebuild_zw_from_posterior2(zd, phi, beta)
+  diff <- as.integer(quanteda::colSums(dfm) - colSums(round(zw)))
+  for (i in which(diff != 0)) {
+    while (diff[i] != 0L) {
+      possible <- (zw[, i] > (-diff[i] - .5))
+      idx <- which.min( (zw[possible, i] - round(zw[possible, i])*diff[i] ))
+      zw[which(possible)[idx], i] <- zw[which(possible)[idx], i] + 1*sign(diff[i])
+      diff[i] <- as.integer(sum(dfm[, i]) - sum(round(zw[, i])))
+    }
+  }
+  zw <- round(zw)
+  diff2 <- as.integer(rowSums(zd) - rowSums(round(zw)))
+  ## quickly adjust second dimension
+  while (any(diff2 < 0)) {
+    count <- 1L;
+    while (TRUE) {
+      non_zero <- length(zw[diff2 < 0][zw[diff2 < 0] > count])
+      deduct <- ceiling(abs(min(diff2))/non_zero)
+      if (deduct <= count) break
+      else count <- count + 1
+    }
+    zw[diff2 < 0][zw[diff2 < 0] > count] <- zw[diff2 < 0][zw[diff2 < 0] > count] - deduct
+    diff2 <- as.integer(rowSums(zd) - rowSums(round(zw)))
+  }
+  diff <- as.integer(quanteda::colSums(dfm)) - as.integer(colSums(round(zw)))
+  zw <- zw + stats::r2dtable(1, diff2, diff)[[1]]
+  storage.mode(zw) <- "integer"
+  stopifnot(isTRUE(all.equal(colSums(zw), unname(quanteda::colSums(dfm)))))
+  stopifnot(isTRUE(all.equal(rowSums(zw), rowSums(zd))))
+
+  LDA <- structure(list(
+    tokens = vocabulary$toks,
+    vocabulary = vocabulary$vocabulary,
+    K = K,
+    alpha = alpha,
+    beta = beta,
+    it = x$options$iterations,
+    theta = x$theta,
+    phi = phi,
+    zd = zd,
+    zw = zw,
+    logLikelihood = NULL
+  ), class = c("LDA", "sentopicmodel"), reversed = TRUE, Sdim = "L2",
+  approx = TRUE, labels = list(L1 = colnames(x$theta)))
+  LDA <- as.LDA(reorder_sentopicmodel(LDA))
+
+  LDA
+}
+
 
 
 # To LDAvis ---------------------------------------------------------------
@@ -406,7 +538,7 @@ as.LDA_lda <- function(list, docs, alpha, eta) {
 #'
 #' @return Nothing, called for its side effects.
 #' @export
-#' 
+#'
 #' @seealso [plot.sentopicmodel()]
 #'
 #' @examples
@@ -420,7 +552,7 @@ LDAvis <- function(x, ...) {
                             paste0(mis, collapse = ", "),".\n",
                             "Install command: install.packages(",
                             paste0("'", mis, "'", collapse = ", "),")" )
-  
+
   stopifnot(inherits(x, c("LDA", "sentopicmodel")))
   zw <- rebuild_zw(as.sentopicmodel(x))
   zd <- rebuild_zd(as.sentopicmodel(x))
@@ -713,10 +845,10 @@ as.tokens.dfm <- function(x, concatenator = NULL, tokens = NULL, ignore_list = N
     res
   } else {
     # quanteda::as.tokens(apply(quanteda::dfm_remove(x, ""), 1, function(x) rep(names(x), times = x)))
-    
+
     if (min(x) < 0) stop("Dfm input should not contain negative values")
-    
-    
+
+
     #faster
     # tmp <- quanteda::convert(quanteda::t(x), to = "tripletlist")
     # word <- rep(tmp$document, times = tmp$frequency)
@@ -724,10 +856,10 @@ as.tokens.dfm <- function(x, concatenator = NULL, tokens = NULL, ignore_list = N
     # res <- as.tokens(split(word, ff))
     # attr(res, "docvars") <- attr(x, "docvars")
     # res
-    
+
     # R CMD check
     feature <- frequency <- document <- NULL
-    
+
     vocab <- colnames(x)
     docs <- rownames(x)
     colnames(x) <- seq_len(ncol(x))
@@ -737,7 +869,7 @@ as.tokens.dfm <- function(x, concatenator = NULL, tokens = NULL, ignore_list = N
     data.table::setDT(tmp)
 
     missing <- setdiff(seq_len(nrow(x)), unique(tmp$document))
-    
+
     if (length(missing) > 0) {
       tmp <- rbind(
         tmp,
@@ -747,19 +879,19 @@ as.tokens.dfm <- function(x, concatenator = NULL, tokens = NULL, ignore_list = N
           frequency = 0L
         ))
     }
-    
+
     toks <- tmp[, list(toks = list(rep(feature, times = frequency))), by = document]
     toks <- toks[order(document)]
-    
+
     build_tokens <- get("build_tokens", envir = getNamespace("quanteda"))
     make_docvars <- get("make_docvars", envir = getNamespace("quanteda"))
-    
+
     res <- build_tokens(
       x = toks$toks,
       types = vocab,
       docvars = make_docvars(nrow(toks), docname = docs)
     )
-    
+
     attr(res, "docvars") <- attr(x, "docvars")
     res
   }
