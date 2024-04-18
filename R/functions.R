@@ -9,7 +9,7 @@
 #' @param x a `sentopicmodel` created from the [LDA()], [JST()] or [rJST()]
 #' @param nWords the number of top words to extract
 #' @param method specify if a re-ranking function should be applied before
-#'   returning the top words
+#'   returning the top words. See Details for a description of each method.
 #' @param output determines the output of the function
 #' @param subset allows to subset using a logical expression, as in [subset()].
 #'   Particularly useful to limit the number of observation on plot outputs. The
@@ -17,17 +17,55 @@
 #'   label. It is possible to subset on both topic and sentiment but adding a
 #'   `&` operator between two expressions.
 #' @param w only used when `method = "FREX"`. Determines the weight assigned to
-#'   the frequency score at the expense of the exclusivity score.
+#'   the exclusivity score at the expense of the frequency score.
 #'
 #' @return The top words of the topic model. Depending on the output chosen, can
 #'   result in either a long-style data.frame, a `ggplot2` object or a matrix.
+#'
+#' @details `"frequency"` ranks top words according to their frequency
+#'   within a topic. This method also reports the overall frequency of
+#'   each word. When returning a plot, the overall frequency is
+#'   represented with a grey bar.
+#'
+#'   `"probability"` uses the estimated topic-word mixture \eqn{\phi} to
+#'   rank top words.
+#'
+#'   `"term-score"` implements the re-ranking method from Blei and
+#'   Lafferty (2009). This method down-weights terms that have high
+#'   probability in all topics using the following score:
+#'   \deqn{\text{term-score}_{k,v} = \phi_{k, v}\log\left(\frac{\phi_{k,
+#'   v}}{\left(\prod^K_{j=1}\phi_{j,v}\right)^{\frac{1}{K}}}\right),} for
+#'   topic \eqn{k}, vocabulary word \eqn{v} and number of topics \eqn{K}.
+#'
+#'   `"FREX"` implements the re-ranking method from Bischof and Airoldi
+#'   (2012). This method used the weight \eqn{w} to balance between
+#'   topic-word probability and topic exclusivity using the following
+#'   score:
+#'   \deqn{\text{FREX}_{k,v}=\left(\frac{w}{\text{ECDF}\left(
+#'   \frac{\phi_{k,v}}{\sum_{j=1}^K\phi_{k,v}}\right)}
+#'   + \frac{1-w}{\text{ECDF}\left(\phi_{k,v}\right)} \right),} for
+#'   topic \eqn{k}, vocabulary word \eqn{v}, number of topics \eqn{K} and
+#'   weight \eqn{w}, where \eqn{\text{ECDF}} is the empirical cumulative
+#'   distribution function.
+#'
+#'
+#' @references Blei, DM. and Lafferty, JD. (2009). [Topic
+#'   models.](https://www.taylorfrancis.com/chapters/edit/10.1201/9781420059458-12/topic-models-david-blei-john-la%EF%AC%80erty). In *Text Mining*,
+#'   chapter 4, 101--124.
+#'
+#'   Bischof JM. and Airoldi, EM. (2012). [Summarizing Topical Content
+#'   with Word Frequency and
+#'   Exclusivity.](https://dl.acm.org/doi/10.5555/3042573.3042578). In
+#'   *Proceedings of the 29th International Conference on International
+#'   Conference on Machine Learning*, ICML'12, 9--16.
+#'
 #'
 #' @import data.table
 #' @export
 #' @seealso [melt.sentopicmodel()] for extracting estimated mixtures
 #' @examples
 #' model <- LDA(ECB_press_conferences_tokens)
-#' model <- grow(model, 10)
+#' model <- fit(model, 10)
 #' topWords(model)
 #' topWords(model, output = "matrix")
 #' topWords(model, method = "FREX")
@@ -41,7 +79,7 @@ topWords <- function(x,
   ## CMD check
   word <- value <- overall <- NULL
 
-  if (x$it < 1) stop("No top words yet. Iterate the model with grow() first.")
+  if (x$it < 1) stop("No top words yet. Iterate the model with fit() first.")
   class <- class(x)[1]
   method <- match.arg(method)
   output <- match.arg(output)
@@ -57,7 +95,7 @@ topWords <- function(x,
       env))
     top <- subset(top, eval(subset))
   }
-  
+
   switch(output,
          "matrix" = {
            res <- matrix(top$word, nrow = nWords)
@@ -139,7 +177,7 @@ topWords_dt <- function(x,
   epsilon <- 10^-100
 
   method <- match.arg(method)
-  
+
   nClusters <- max(phiStats$L1) * max(phiStats$L2)
   switch(method,
          "frequency" = {
@@ -157,15 +195,15 @@ topWords_dt <- function(x,
              , list(word, L1, L2, value = value + .Machine$double.eps)][
                , list(L1, L2, value = value * log(value / prod(value)^(1/nClusters))), by = word]},
          "FREX" = {
-           
+
            if (w < 0 | w > 1) stop("The argument 'w' should be constrained between 0 and 1.")
-           
+
            phiStats[, "exclusivity" := value / sum(value), by = word]
            phiStats <-
-             phiStats[, list(word, value =
-                               w * data.table::frank(value) / .N +
-                               (1 - w) * data.table::frank(exclusivity) / .N),
-                      by = c("L1", "L2")]
+             phiStats[, list(word, value = (
+               w / (data.table::frank(exclusivity) / .N) +
+                 (1 - w) / (data.table::frank(value) / .N)
+               )^-1 ), by = c("L1", "L2")]
          },
          "topics" = {
            ## TODO: to update?
@@ -186,12 +224,12 @@ topWords_dt <- function(x,
 
 #' @rdname topWords
 #' @export
-#' @examples 
+#' @examples
 #' plot_topWords(model)
 #' plot_topWords(model, subset = topic %in% 1:2)
-#' 
+#'
 #' jst <- JST(ECB_press_conferences_tokens)
-#' jst <- grow(jst, 10)
+#' jst <- fit(jst, 10)
 #' plot_topWords(jst)
 #' plot_topWords(jst, subset = topic %in% 1:2 & sentiment == 3)
 plot_topWords <- function(x,
@@ -216,7 +254,7 @@ plot_topWords <- function(x,
 #'   = TRUE`.
 #'
 #' @param x a model created from the [LDA()], [JST()] or [rJST()] function and
-#'   estimated with [grow()]
+#'   estimated with \code{\link[=fit.sentopicmodel]{fit()}}
 #' @param method the coherence method used.
 #' @param nWords the number of words in each topic used for evaluation.
 #' @param window optional. If `NULL`, use the default window for each coherence
@@ -292,12 +330,13 @@ coherence.sentopicmodel <- function(x, nWords = 10, method = c("C_NPMI", "C_V"),
 #'   Estimates are referred to as *chains*.
 #'
 #' @param x a valid `multiChains` object, obtained through the estimation of a
-#'   topic model using [grow()] and the argument `nChains` greater than `1`.
+#'   topic model using \code{\link[=fit.sentopicmodel]{fit()}} and the argument
+#'   `nChains` greater than `1`.
 #' @param method the method used to measure the distance between chains.
 #' @param ... further arguments passed to internal distance functions.
 #'
 #' @details The `method` argument determines how are computed distance.
-#' 
+#'
 #'  - `euclidean` finds the pairs of topics that minimizes and returns the total
 #'  Euclidean distance.
 #'  - `hellinger` does the same but based on the Hellinger distance.
@@ -316,7 +355,7 @@ coherence.sentopicmodel <- function(x, nWords = 10, method = c("C_NPMI", "C_V"),
 #' @return A matrix of distance between the elements of `x`
 #' @examples
 #' model <- LDA(ECB_press_conferences_tokens)
-#' model <- grow(model, 10, nChains = 5)
+#' model <- fit(model, 10, nChains = 5)
 #' chainsDistances(model)
 #'
 #' @seealso [plot.multiChains()] [chainsScores()]
@@ -334,7 +373,7 @@ chainsDistances <- function(x,
   x <- as.sentopicmodel(x)
   # avoid copying base to each chain
   x <- as.list(x, copy = FALSE)
-    
+
   method <- match.arg(method)
   switch(method,
          "cosine" = cosineDistances(x),
@@ -353,7 +392,8 @@ chainsDistances <- function(x,
 #' models.
 #'
 #' @param x a valid `multiChains` object, obtained through the estimation of a
-#'   topic model using [grow()] and the argument `nChains` greater than `1`.
+#'   topic model using \code{\link[=fit.sentopicmodel]{fit()}} and the argument
+#'   `nChains` greater than `1`.
 #' @param nWords the number of words used to compute coherence. See
 #'   [coherence()].
 #' @param window optional. If `NULL`, use the default window for each coherence
@@ -365,14 +405,14 @@ chainsDistances <- function(x,
 #'   coherence metrics, the value shown is the mean coherence across all topics
 #'   of a chain
 #'
-#' @inheritSection grow Parallelism
+#' @inheritSection fit.sentopicmodel Parallelism
 #'
 #' @examples
 #' model <- LDA(ECB_press_conferences_tokens[1:10])
-#' model <- grow(model, 10, nChains = 5)
+#' model <- fit(model, 10, nChains = 5)
 #' chainsScores(model, window = 5)
 #' chainsScores(model, window = "boolean")
-#' 
+#'
 #' # -- Parallel computation --
 #' require(future.apply)
 #' future::plan("multisession", workers = 2) # Set up 2 workers
@@ -395,10 +435,10 @@ chainsScores <- function(x, window = 110, nWords = 10) {
   } else {
     NPMIsW <- NPMIs10 <- computeNPMI(x$tokens, window)
   }
-  
+
   # avoid copying base to each chain # could be further optimized
   x <- as.list(x, copy = FALSE)
-  
+
   FUN <- function(x) {
     score <- data.table::data.table(
       # name = name,
@@ -425,6 +465,6 @@ chainsScores <- function(x, window = 110, nWords = 10) {
   } else {
     chainsScores <- sapply(x, FUN)
   }
-  
+
   t(chainsScores)
 }

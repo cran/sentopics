@@ -13,7 +13,7 @@
 #' @param alpha for \pkg{lda} models, the document-topic mixture hyperparameter.
 #'   If missing, the hyperparameter will be set to `50/K`.
 #' @param eta for \pkg{lda} models, the topic-word mixture hyperparameter. Other
-#'   packages refer to this hypeparameter as *beta*. If missing, the
+#'   packages refer to this hyperparameter as *beta*. If missing, the
 #'   hyperparameter will be set to `0.01`.
 #' @param ... arguments passed to other methods.
 #'
@@ -21,14 +21,14 @@
 #'   example, estimated through variational inference). For these, the
 #'   conversion is limited and some functionalities of \pkg{sentopics} will be
 #'   disabled. The list of affected functions is subject to change and currently
-#'   includes [grow()], [mergeTopics()] and [rJST.LDA()].
+#'   includes \code{\link[=fit.sentopicmodel]{fit()}}, [mergeTopics()] and [rJST.LDA()].
 #'
 #'   Since models from the \pkg{lda} package are simply lists of outputs, the
 #'   function `as.LDA_lda()` is not related to the other methods and should be
 #'   applied directly on lists containing a model.
 #'
 #' @return A S3 list of class `LDA`, as if it was created and estimated using
-#'   [LDA()] and [grow()].
+#'   [LDA()] and \code{\link[=fit.sentopicmodel]{fit()}}.
 #'
 #' @rdname as.LDA
 #' @export
@@ -218,7 +218,7 @@ as.LDA.LDA_Gibbs <- function(x, docs, ...) {
     za = za,
     logLikelihood = NULL
   ), class = c("LDA", "sentopicmodel"), reversed = TRUE, Sdim = "L2")
-  LDA <- grow(LDA, 0, displayProgress = FALSE)
+  LDA <- fit(LDA, 0, displayProgress = FALSE)
 
   LDA
 }
@@ -311,11 +311,15 @@ as.LDA.LDA_VEM <- function(x, docs, ...) {
 #' @export
 as.LDA.textmodel_lda <- function(x, ...) {
 
+  version <- x$version
+
+  if (!(version >= "1.2.0")) stop("Conversion is not allowed from models created using a version of `seededlda` below 1.2.0")
+
   labels <- colnames(x$theta)
 
   beta <- x$phi
   beta[] <- x$beta
-  alpha <- rep(x$alpha, x$k)
+  alpha <- x$alpha
 
   tokens <- as.tokens(x$data)
   vocabulary <- makeVocabulary(tokens, NULL, 1L)
@@ -333,7 +337,7 @@ as.LDA.textmodel_lda <- function(x, ...) {
     tokens = vocabulary$toks,
     vocabulary = vocabulary$vocabulary,
     K = x$k,
-    alpha = as.matrix(rep(x$alpha, x$k)),
+    alpha = as.matrix(x$alpha),
     beta = beta,
     it = x$last_iter,
     theta = x$theta,
@@ -390,7 +394,7 @@ as.LDA_lda <- function(list, docs, alpha, eta) {
     za = za,
     logLikelihood = NULL
   ), class = c("LDA", "sentopicmodel"), reversed = TRUE, Sdim = "L2")
-  LDA <- grow(LDA, 0, displayProgress = FALSE)
+  LDA <- fit(LDA, 0, displayProgress = FALSE)
 
   LDA
 }
@@ -543,7 +547,7 @@ as.LDA.keyATM_output <- function(x, docs, ...) {
 #'
 #' @examples
 #' lda <- LDA(ECB_press_conferences_tokens)
-#' lda <- grow(lda, 100)
+#' lda <- fit(lda, 100)
 #' LDAvis(lda)
 LDAvis <- function(x, ...) {
   mis <- missingSuggets(c("LDAvis", "servr"))
@@ -595,9 +599,6 @@ as.sentopicmodel_defaults <- function(x) {
                               dimnames(x$L1post)[1])
     x$L2post <- L2post
   }
-  if (is.null(x$initLDA)) x$initLDA <- 0
-  if (is.null(x$smooth)) x$smooth <- 0
-  if (is.null(x$initType)) x$initType <- 1
   if (is.null(x$L1cycle)) x$L1cycle <- 0
   if (is.null(x$L2cycle)) x$L2cycle <- 0
   if (is.null(x$logLikelihood)) {
@@ -690,7 +691,7 @@ as.LDA.sentopicmodel <- function(x, ...) {
   rename <- replace(rename, names(translate), translate)[rename]
   names(x) <- rename
   # x$phi <- x$phi[,,] ## this drops un-needed sentiment dimension ### Need to account for labels..
-  x$S <- x$gamma <- x$pi <- x$initLDA <- x$smooth <- x$initType <- x$alphaCycle <- x$gammaCycle <- x$logLikelihoodS <- NULL
+  x$S <- x$gamma <- x$pi <- x$alphaCycle <- x$gammaCycle <- x$logLikelihoodS <- NULL
   class(x) <- union("LDA", class(x))
   x
 }

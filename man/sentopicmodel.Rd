@@ -14,8 +14,6 @@ sentopicmodel(
   beta = 0.01,
   L1cycle = 0,
   L2cycle = 0,
-  initLDA = 0,
-  smooth = 0,
   reversed = TRUE
 )
 }
@@ -38,14 +36,16 @@ sentopicmodel(
 
 \item{L2cycle}{integer specifying the cycle size between two updates of the hyperparameter L2prior}
 
-\item{initLDA}{integer specifying the number of iterations of the LDA burn-in}
-
-\item{smooth}{integer specifying the number of iterations of the smoothed burn-in}
+\item{reversed}{indicates on which dimension should \code{lexicon} apply. When
+\code{reversed=FALSE}, the lexicon is applied on the first layer of the document
+mixture (as in a JST model). When \code{reversed=TRUE}, the lexicon is applied to
+the second layer of the document mixture (as in a reversed-JST model).}
 }
 \value{
 An S3 list containing the model parameter and the estimated mixture.
 This object corresponds to a Gibbs sampler estimator with zero iterations.
-The MCMC can be iterated using the \code{\link[=grow]{grow()}} function.
+The MCMC can be iterated using the \code{\link[=fit.sentopicmodel]{fit()}}
+function.
 \itemize{
 \item \code{tokens} is the tokens object used to create the model
 \item \code{vocabulary} contains the set of words of the corpus
@@ -71,7 +71,8 @@ LDA(ECB_press_conferences_tokens)
 rJST(ECB_press_conferences_tokens, lexicon = LoughranMcDonald)
 }
 \seealso{
-Growing a model: \code{\link[=grow]{grow()}}, extracting top words: \code{\link[=topWords]{topWords()}}
+Fitting a model: \code{\link[=fit.sentopicmodel]{fit()}},
+extracting top words: \code{\link[=topWords]{topWords()}}
 
 Other topic models: 
 \code{\link{JST}()},

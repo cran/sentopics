@@ -7,9 +7,9 @@
 
 [![CRAN
 Version](https://www.r-pkg.org/badges/version/sentopics)](https://CRAN.R-project.org/package=sentopics)
-[![R-CMD-check](https://github.com/odelmarcelle/sentopics/workflows/R-CMD-check/badge.svg)](https://github.com/odelmarcelle/sentopics/actions)
 [![Codecov test
 coverage](https://codecov.io/gh/odelmarcelle/sentopics/branch/master/graph/badge.svg?token=V6M82L4ZCX)](https://app.codecov.io/gh/odelmarcelle/sentopics)
+[![R-CMD-check](https://github.com/odelmarcelle/sentopics/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/odelmarcelle/sentopics/actions/workflows/R-CMD-check.yaml)
 <!-- badges: end -->
 
 ## Installation
@@ -56,15 +56,15 @@ print(ECB_press_conferences_tokens, 2)
 # [ reached max_ndoc ... 3,858 more documents ]
 set.seed(123)
 lda <- LDA(ECB_press_conferences_tokens, K = 3, alpha = .1)
-lda <- grow(lda, 100)
+lda <- fit(lda, 100)
 lda
-# An LDA model with 3 topics. Currently grown by 100 Gibbs sampling iterations.
+# An LDA model with 3 topics. Currently fitted by 100 Gibbs sampling iterations.
 # ------------------Useful methods------------------
-# grow      :Iterates the model using Gibbs sampling
+# fit       :Estimate the model using Gibbs sampling
 # topics    :Return the most important topic of each document
 # topWords  :Return a data.table with the top words of each topic/sentiment
-# plot      :A sunburst chart representing the estimated mixtures
-# This helpful message is displayed once per session, unless calling `print(x, extended = TRUE)`
+# plot      :Plot a sunburst chart representing the estimated mixtures
+# This message is displayed once per session, unless calling `print(x, extended = TRUE)`
 ```
 
 There are various way to extract results from the model: it is either
@@ -84,13 +84,14 @@ head(lda$theta)
 #    1_6 0.006993007 0.9160839 0.076923077
 # The document-topic in a 'long' format & optionally with meta-data
 head(melt(lda, include_docvars = FALSE))
-#     topic .id        prob
-# 1: topic1 1_1 0.005780347
-# 2: topic1 1_2 0.004291845
-# 3: topic1 1_3 0.015873016
-# 4: topic1 1_4 0.009708738
-# 5: topic1 1_5 0.008849558
-# 6: topic1 1_6 0.006993007
+#     topic    .id        prob
+#    <fctr> <char>       <num>
+# 1: topic1    1_1 0.005780347
+# 2: topic1    1_2 0.004291845
+# 3: topic1    1_3 0.015873016
+# 4: topic1    1_4 0.009708738
+# 5: topic1    1_5 0.008849558
+# 6: topic1    1_6 0.006993007
 # The most probable words per topic
 topWords(lda, output = "matrix") 
 #       topic1        topic2              topic3           
@@ -123,13 +124,15 @@ sentiment.
 
 ``` r
 sentopics_date(lda)  |> head(2)
-#    .id      .date
-# 1: 1_1 1998-06-09
-# 2: 1_2 1998-06-09
+#       .id      .date
+#    <char>     <Date>
+# 1:    1_1 1998-06-09
+# 2:    1_2 1998-06-09
 sentopics_sentiment(lda) |> head(2)
-#    .id  .sentiment
-# 1: 1_1 -0.01470588
-# 2: 1_2 -0.02500000
+#       .id  .sentiment
+#    <char>       <num>
+# 1:    1_1 -0.01470588
+# 2:    1_2 -0.02500000
 proportion_topics(lda, period = "month") |> head(2)
 #                topic1    topic2     topic3
 # 1998-06-01 0.04004786 0.9100265 0.04992568

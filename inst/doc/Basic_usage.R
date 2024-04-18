@@ -1,4 +1,4 @@
-## ---- include = FALSE---------------------------------------------------------
+## ----include = FALSE----------------------------------------------------------
 knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#",
@@ -17,7 +17,7 @@ head(docvars(ECB_press_conferences_tokens))
 set.seed(123)
 lda <- LDA(ECB_press_conferences_tokens)
 lda
-lda <- grow(lda, iterations = 100)
+lda <- fit(lda, iterations = 100)
 lda
 
 ## -----------------------------------------------------------------------------
@@ -44,10 +44,10 @@ merged <- mergeTopics(lda, list(
 ))
 merged
 
-## ---- eval=FALSE--------------------------------------------------------------
+## ----eval=FALSE---------------------------------------------------------------
 #  plot(lda)
 
-## ---- eval=FALSE, include=FALSE-----------------------------------------------
+## ----eval=FALSE, include=FALSE------------------------------------------------
 #  suppressWarnings({
 #    plotly::save_image(plot(lda), file = "plotly1.svg")
 #  })

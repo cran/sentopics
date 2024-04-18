@@ -144,7 +144,187 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; }
 
 
 
-<style type="text/css">body {background-color: #fff;margin: 1em auto;max-width: 700px;overflow: visible;padding-left: 2em;padding-right: 2em;font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;font-size: 14px;line-height: 1.35;}#TOC {clear: both;margin: 0 0 10px 10px;padding: 4px;width: 400px;border: 1px solid #CCCCCC;border-radius: 5px;background-color: #f6f6f6;font-size: 13px;line-height: 1.3;}#TOC .toctitle {font-weight: bold;font-size: 15px;margin-left: 5px;}#TOC ul {padding-left: 40px;margin-left: -1.5em;margin-top: 5px;margin-bottom: 5px;}#TOC ul ul {margin-left: -2em;}#TOC li {line-height: 16px;}table {margin: 1em auto;border-width: 1px;border-color: #DDDDDD;border-style: outset;border-collapse: collapse;}table th {border-width: 2px;padding: 5px;border-style: inset;}table td {border-width: 1px;border-style: inset;line-height: 18px;padding: 5px 5px;}table, table th, table td {border-left-style: none;border-right-style: none;}table thead, table tr.even {background-color: #f7f7f7;}p {margin: 0.5em 0;}blockquote {background-color: #f6f6f6;padding: 0.25em 0.75em;}hr {border-style: solid;border: none;border-top: 1px solid #777;margin: 28px 0;}dl {margin-left: 0;}dl dd {margin-bottom: 13px;margin-left: 13px;}dl dt {font-weight: bold;}ul {margin-top: 0;}ul li {list-style: circle outside;}ul ul {margin-bottom: 0;}pre, code {background-color: #f7f7f7;border-radius: 3px;color: #333;white-space: pre-wrap; }pre {border-radius: 3px;margin: 5px 0px 10px 0px;padding: 10px;}pre:not([class]) {background-color: #f7f7f7;}code {font-family: Consolas, Monaco, 'Courier New', monospace;font-size: 85%;}p > code, li > code {padding: 2px 0px;}div.figure {text-align: center;}img {background-color: #FFFFFF;padding: 2px;border: 1px solid #DDDDDD;border-radius: 3px;border: 1px solid #CCCCCC;margin: 0 5px;}h1 {margin-top: 0;font-size: 35px;line-height: 40px;}h2 {border-bottom: 4px solid #f7f7f7;padding-top: 10px;padding-bottom: 2px;font-size: 145%;}h3 {border-bottom: 2px solid #f7f7f7;padding-top: 10px;font-size: 120%;}h4 {border-bottom: 1px solid #f7f7f7;margin-left: 8px;font-size: 105%;}h5, h6 {border-bottom: 1px solid #ccc;font-size: 105%;}a {color: #0033dd;text-decoration: none;}a:hover {color: #6666ff; }a:visited {color: #800080; }a:visited:hover {color: #BB00BB; }a[href^="http:"] {text-decoration: underline; }a[href^="https:"] {text-decoration: underline; }code > span.kw { color: #555; font-weight: bold; } code > span.dt { color: #902000; } code > span.dv { color: #40a070; } code > span.bn { color: #d14; } code > span.fl { color: #d14; } code > span.ch { color: #d14; } code > span.st { color: #d14; } code > span.co { color: #888888; font-style: italic; } code > span.ot { color: #007020; } code > span.al { color: #ff0000; font-weight: bold; } code > span.fu { color: #900; font-weight: bold; } code > span.er { color: #a61717; background-color: #e3d2d2; } </style>
+<style type="text/css">body {
+background-color: #fff;
+margin: 1em auto;
+max-width: 700px;
+overflow: visible;
+padding-left: 2em;
+padding-right: 2em;
+font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+font-size: 14px;
+line-height: 1.35;
+}
+#TOC {
+clear: both;
+margin: 0 0 10px 10px;
+padding: 4px;
+width: 400px;
+border: 1px solid #CCCCCC;
+border-radius: 5px;
+background-color: #f6f6f6;
+font-size: 13px;
+line-height: 1.3;
+}
+#TOC .toctitle {
+font-weight: bold;
+font-size: 15px;
+margin-left: 5px;
+}
+#TOC ul {
+padding-left: 40px;
+margin-left: -1.5em;
+margin-top: 5px;
+margin-bottom: 5px;
+}
+#TOC ul ul {
+margin-left: -2em;
+}
+#TOC li {
+line-height: 16px;
+}
+table {
+margin: 1em auto;
+border-width: 1px;
+border-color: #DDDDDD;
+border-style: outset;
+border-collapse: collapse;
+}
+table th {
+border-width: 2px;
+padding: 5px;
+border-style: inset;
+}
+table td {
+border-width: 1px;
+border-style: inset;
+line-height: 18px;
+padding: 5px 5px;
+}
+table, table th, table td {
+border-left-style: none;
+border-right-style: none;
+}
+table thead, table tr.even {
+background-color: #f7f7f7;
+}
+p {
+margin: 0.5em 0;
+}
+blockquote {
+background-color: #f6f6f6;
+padding: 0.25em 0.75em;
+}
+hr {
+border-style: solid;
+border: none;
+border-top: 1px solid #777;
+margin: 28px 0;
+}
+dl {
+margin-left: 0;
+}
+dl dd {
+margin-bottom: 13px;
+margin-left: 13px;
+}
+dl dt {
+font-weight: bold;
+}
+ul {
+margin-top: 0;
+}
+ul li {
+list-style: circle outside;
+}
+ul ul {
+margin-bottom: 0;
+}
+pre, code {
+background-color: #f7f7f7;
+border-radius: 3px;
+color: #333;
+white-space: pre-wrap; 
+}
+pre {
+border-radius: 3px;
+margin: 5px 0px 10px 0px;
+padding: 10px;
+}
+pre:not([class]) {
+background-color: #f7f7f7;
+}
+code {
+font-family: Consolas, Monaco, 'Courier New', monospace;
+font-size: 85%;
+}
+p > code, li > code {
+padding: 2px 0px;
+}
+div.figure {
+text-align: center;
+}
+img {
+background-color: #FFFFFF;
+padding: 2px;
+border: 1px solid #DDDDDD;
+border-radius: 3px;
+border: 1px solid #CCCCCC;
+margin: 0 5px;
+}
+h1 {
+margin-top: 0;
+font-size: 35px;
+line-height: 40px;
+}
+h2 {
+border-bottom: 4px solid #f7f7f7;
+padding-top: 10px;
+padding-bottom: 2px;
+font-size: 145%;
+}
+h3 {
+border-bottom: 2px solid #f7f7f7;
+padding-top: 10px;
+font-size: 120%;
+}
+h4 {
+border-bottom: 1px solid #f7f7f7;
+margin-left: 8px;
+font-size: 105%;
+}
+h5, h6 {
+border-bottom: 1px solid #ccc;
+font-size: 105%;
+}
+a {
+color: #0033dd;
+text-decoration: none;
+}
+a:hover {
+color: #6666ff; }
+a:visited {
+color: #800080; }
+a:visited:hover {
+color: #BB00BB; }
+a[href^="http:"] {
+text-decoration: underline; }
+a[href^="https:"] {
+text-decoration: underline; }
+
+code > span.kw { color: #555; font-weight: bold; } 
+code > span.dt { color: #902000; } 
+code > span.dv { color: #40a070; } 
+code > span.bn { color: #d14; } 
+code > span.fl { color: #d14; } 
+code > span.ch { color: #d14; } 
+code > span.st { color: #d14; } 
+code > span.co { color: #888888; font-style: italic; } 
+code > span.ot { color: #007020; } 
+code > span.al { color: #ff0000; font-weight: bold; } 
+code > span.fu { color: #900; font-weight: bold; } 
+code > span.er { color: #a61717; background-color: #e3d2d2; } 
+</style>
 
 
 
@@ -173,54 +353,54 @@ pre-processed into a <code>tokens</code> object from the
 introduction</a> for details on these objects). The press conferences
 also contains meta-data which can be accessed using
 <code>docvars()</code>.</p>
-<p>The press conferences were obtained from <a href="https://www.ecb.europa.eu/press/key/html/index.en.html">ECB’s
+<p>The press conferences were obtained from <a href="https://www.ecb.europa.eu/press/press_conference/monetary-policy-statement/html/index.en.html">ECB’s
 website</a>. The package also provides an helper function to replicate
 the creation of the dataset:
 <code>get_ECB_press_conferences()</code></p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(<span class="st">&quot;sentopics&quot;</span>)</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(<span class="st">&quot;ECB_press_conferences_tokens&quot;</span>)</span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(ECB_press_conferences_tokens, <span class="dv">3</span>)</span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Tokens consisting of 3,860 documents and 5 docvars.</span></span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="co"># 1_1 :</span></span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="co">#  [1] &quot;outcome&quot;           &quot;meeting&quot;           &quot;decision&quot;         </span></span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="co">#  [4] &quot;&quot;                  &quot;ecb&quot;               &quot;general&quot;          </span></span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="co">#  [7] &quot;council&quot;           &quot;governing_council&quot; &quot;executive&quot;        </span></span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="co"># [10] &quot;board&quot;             &quot;accordance&quot;        &quot;escb&quot;             </span></span>
-<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="co"># [ ... and 7 more ]</span></span>
-<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="co"># </span></span>
-<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a><span class="co"># 1_2 :</span></span>
-<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a><span class="co">#  [1] &quot;&quot;              &quot;state&quot;         &quot;government&quot;    &quot;member&quot;       </span></span>
-<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a><span class="co">#  [5] &quot;executive&quot;     &quot;board&quot;         &quot;ecb&quot;           &quot;president&quot;    </span></span>
-<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a><span class="co">#  [9] &quot;vice&quot;          &quot;president&quot;     &quot;date&quot;          &quot;establishment&quot;</span></span>
-<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a><span class="co"># [ ... and 13 more ]</span></span>
-<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a><span class="co"># </span></span>
-<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a><span class="co"># 1_3 :</span></span>
-<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a><span class="co">#  [1] &quot;&quot;          &quot;meeting&quot;   &quot;executive&quot; &quot;board&quot;     &quot;meeting&quot;   &quot;&quot;         </span></span>
-<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a><span class="co">#  [7] &quot;general&quot;   &quot;&quot;          &quot;meeting&quot;   &quot;&quot;         </span></span>
-<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a><span class="co"># </span></span>
-<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a><span class="co"># [ reached max_ndoc ... 3,857 more documents ]</span></span>
-<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(<span class="fu">docvars</span>(ECB_press_conferences_tokens))</span>
-<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a><span class="co">#        .date doc_id                                        title</span></span>
-<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a><span class="co"># 1 1998-06-09      1 ECB Press conference: Introductory statement</span></span>
-<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a><span class="co"># 2 1998-06-09      1 ECB Press conference: Introductory statement</span></span>
-<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a><span class="co"># 3 1998-06-09      1 ECB Press conference: Introductory statement</span></span>
-<span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a><span class="co"># 4 1998-06-09      1 ECB Press conference: Introductory statement</span></span>
-<span id="cb1-29"><a href="#cb1-29" aria-hidden="true" tabindex="-1"></a><span class="co"># 5 1998-06-09      1 ECB Press conference: Introductory statement</span></span>
-<span id="cb1-30"><a href="#cb1-30" aria-hidden="true" tabindex="-1"></a><span class="co"># 6 1998-06-09      1 ECB Press conference: Introductory statement</span></span>
-<span id="cb1-31"><a href="#cb1-31" aria-hidden="true" tabindex="-1"></a><span class="co">#                                                               section_title</span></span>
-<span id="cb1-32"><a href="#cb1-32" aria-hidden="true" tabindex="-1"></a><span class="co"># 1 Willem F. Duisenberg, President of the European Central Bank, 9 June 1998</span></span>
-<span id="cb1-33"><a href="#cb1-33" aria-hidden="true" tabindex="-1"></a><span class="co"># 2 Willem F. Duisenberg, President of the European Central Bank, 9 June 1998</span></span>
-<span id="cb1-34"><a href="#cb1-34" aria-hidden="true" tabindex="-1"></a><span class="co"># 3 Willem F. Duisenberg, President of the European Central Bank, 9 June 1998</span></span>
-<span id="cb1-35"><a href="#cb1-35" aria-hidden="true" tabindex="-1"></a><span class="co"># 4 Willem F. Duisenberg, President of the European Central Bank, 9 June 1998</span></span>
-<span id="cb1-36"><a href="#cb1-36" aria-hidden="true" tabindex="-1"></a><span class="co"># 5 Willem F. Duisenberg, President of the European Central Bank, 9 June 1998</span></span>
-<span id="cb1-37"><a href="#cb1-37" aria-hidden="true" tabindex="-1"></a><span class="co"># 6 Willem F. Duisenberg, President of the European Central Bank, 9 June 1998</span></span>
-<span id="cb1-38"><a href="#cb1-38" aria-hidden="true" tabindex="-1"></a><span class="co">#    .sentiment</span></span>
-<span id="cb1-39"><a href="#cb1-39" aria-hidden="true" tabindex="-1"></a><span class="co"># 1 -0.01470588</span></span>
-<span id="cb1-40"><a href="#cb1-40" aria-hidden="true" tabindex="-1"></a><span class="co"># 2 -0.02500000</span></span>
-<span id="cb1-41"><a href="#cb1-41" aria-hidden="true" tabindex="-1"></a><span class="co"># 3  0.00000000</span></span>
-<span id="cb1-42"><a href="#cb1-42" aria-hidden="true" tabindex="-1"></a><span class="co"># 4  0.00000000</span></span>
-<span id="cb1-43"><a href="#cb1-43" aria-hidden="true" tabindex="-1"></a><span class="co"># 5  0.00000000</span></span>
-<span id="cb1-44"><a href="#cb1-44" aria-hidden="true" tabindex="-1"></a><span class="co"># 6  0.00000000</span></span></code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" tabindex="-1"></a><span class="fu">library</span>(<span class="st">&quot;sentopics&quot;</span>)</span>
+<span id="cb1-2"><a href="#cb1-2" tabindex="-1"></a><span class="fu">data</span>(<span class="st">&quot;ECB_press_conferences_tokens&quot;</span>)</span>
+<span id="cb1-3"><a href="#cb1-3" tabindex="-1"></a><span class="fu">print</span>(ECB_press_conferences_tokens, <span class="dv">3</span>)</span>
+<span id="cb1-4"><a href="#cb1-4" tabindex="-1"></a><span class="co"># Tokens consisting of 3,860 documents and 5 docvars.</span></span>
+<span id="cb1-5"><a href="#cb1-5" tabindex="-1"></a><span class="co"># 1_1 :</span></span>
+<span id="cb1-6"><a href="#cb1-6" tabindex="-1"></a><span class="co">#  [1] &quot;outcome&quot;           &quot;meeting&quot;           &quot;decision&quot;         </span></span>
+<span id="cb1-7"><a href="#cb1-7" tabindex="-1"></a><span class="co">#  [4] &quot;&quot;                  &quot;ecb&quot;               &quot;general&quot;          </span></span>
+<span id="cb1-8"><a href="#cb1-8" tabindex="-1"></a><span class="co">#  [7] &quot;council&quot;           &quot;governing_council&quot; &quot;executive&quot;        </span></span>
+<span id="cb1-9"><a href="#cb1-9" tabindex="-1"></a><span class="co"># [10] &quot;board&quot;             &quot;accordance&quot;        &quot;escb&quot;             </span></span>
+<span id="cb1-10"><a href="#cb1-10" tabindex="-1"></a><span class="co"># [ ... and 7 more ]</span></span>
+<span id="cb1-11"><a href="#cb1-11" tabindex="-1"></a><span class="co"># </span></span>
+<span id="cb1-12"><a href="#cb1-12" tabindex="-1"></a><span class="co"># 1_2 :</span></span>
+<span id="cb1-13"><a href="#cb1-13" tabindex="-1"></a><span class="co">#  [1] &quot;&quot;              &quot;state&quot;         &quot;government&quot;    &quot;member&quot;       </span></span>
+<span id="cb1-14"><a href="#cb1-14" tabindex="-1"></a><span class="co">#  [5] &quot;executive&quot;     &quot;board&quot;         &quot;ecb&quot;           &quot;president&quot;    </span></span>
+<span id="cb1-15"><a href="#cb1-15" tabindex="-1"></a><span class="co">#  [9] &quot;vice&quot;          &quot;president&quot;     &quot;date&quot;          &quot;establishment&quot;</span></span>
+<span id="cb1-16"><a href="#cb1-16" tabindex="-1"></a><span class="co"># [ ... and 13 more ]</span></span>
+<span id="cb1-17"><a href="#cb1-17" tabindex="-1"></a><span class="co"># </span></span>
+<span id="cb1-18"><a href="#cb1-18" tabindex="-1"></a><span class="co"># 1_3 :</span></span>
+<span id="cb1-19"><a href="#cb1-19" tabindex="-1"></a><span class="co">#  [1] &quot;&quot;          &quot;meeting&quot;   &quot;executive&quot; &quot;board&quot;     &quot;meeting&quot;   &quot;&quot;         </span></span>
+<span id="cb1-20"><a href="#cb1-20" tabindex="-1"></a><span class="co">#  [7] &quot;general&quot;   &quot;&quot;          &quot;meeting&quot;   &quot;&quot;         </span></span>
+<span id="cb1-21"><a href="#cb1-21" tabindex="-1"></a><span class="co"># </span></span>
+<span id="cb1-22"><a href="#cb1-22" tabindex="-1"></a><span class="co"># [ reached max_ndoc ... 3,857 more documents ]</span></span>
+<span id="cb1-23"><a href="#cb1-23" tabindex="-1"></a><span class="fu">head</span>(<span class="fu">docvars</span>(ECB_press_conferences_tokens))</span>
+<span id="cb1-24"><a href="#cb1-24" tabindex="-1"></a><span class="co">#        .date doc_id                                        title</span></span>
+<span id="cb1-25"><a href="#cb1-25" tabindex="-1"></a><span class="co"># 1 1998-06-09      1 ECB Press conference: Introductory statement</span></span>
+<span id="cb1-26"><a href="#cb1-26" tabindex="-1"></a><span class="co"># 2 1998-06-09      1 ECB Press conference: Introductory statement</span></span>
+<span id="cb1-27"><a href="#cb1-27" tabindex="-1"></a><span class="co"># 3 1998-06-09      1 ECB Press conference: Introductory statement</span></span>
+<span id="cb1-28"><a href="#cb1-28" tabindex="-1"></a><span class="co"># 4 1998-06-09      1 ECB Press conference: Introductory statement</span></span>
+<span id="cb1-29"><a href="#cb1-29" tabindex="-1"></a><span class="co"># 5 1998-06-09      1 ECB Press conference: Introductory statement</span></span>
+<span id="cb1-30"><a href="#cb1-30" tabindex="-1"></a><span class="co"># 6 1998-06-09      1 ECB Press conference: Introductory statement</span></span>
+<span id="cb1-31"><a href="#cb1-31" tabindex="-1"></a><span class="co">#                                                               section_title</span></span>
+<span id="cb1-32"><a href="#cb1-32" tabindex="-1"></a><span class="co"># 1 Willem F. Duisenberg, President of the European Central Bank, 9 June 1998</span></span>
+<span id="cb1-33"><a href="#cb1-33" tabindex="-1"></a><span class="co"># 2 Willem F. Duisenberg, President of the European Central Bank, 9 June 1998</span></span>
+<span id="cb1-34"><a href="#cb1-34" tabindex="-1"></a><span class="co"># 3 Willem F. Duisenberg, President of the European Central Bank, 9 June 1998</span></span>
+<span id="cb1-35"><a href="#cb1-35" tabindex="-1"></a><span class="co"># 4 Willem F. Duisenberg, President of the European Central Bank, 9 June 1998</span></span>
+<span id="cb1-36"><a href="#cb1-36" tabindex="-1"></a><span class="co"># 5 Willem F. Duisenberg, President of the European Central Bank, 9 June 1998</span></span>
+<span id="cb1-37"><a href="#cb1-37" tabindex="-1"></a><span class="co"># 6 Willem F. Duisenberg, President of the European Central Bank, 9 June 1998</span></span>
+<span id="cb1-38"><a href="#cb1-38" tabindex="-1"></a><span class="co">#    .sentiment</span></span>
+<span id="cb1-39"><a href="#cb1-39" tabindex="-1"></a><span class="co"># 1 -0.01470588</span></span>
+<span id="cb1-40"><a href="#cb1-40" tabindex="-1"></a><span class="co"># 2 -0.02500000</span></span>
+<span id="cb1-41"><a href="#cb1-41" tabindex="-1"></a><span class="co"># 3  0.00000000</span></span>
+<span id="cb1-42"><a href="#cb1-42" tabindex="-1"></a><span class="co"># 4  0.00000000</span></span>
+<span id="cb1-43"><a href="#cb1-43" tabindex="-1"></a><span class="co"># 5  0.00000000</span></span>
+<span id="cb1-44"><a href="#cb1-44" tabindex="-1"></a><span class="co"># 6  0.00000000</span></span></code></pre></div>
 </div>
 <div id="topic-modeling" class="section level1">
 <h1>Topic modeling</h1>
@@ -278,39 +458,39 @@ variables.</p>
 <div id="estimating-lda-models-with-sentopics" class="section level2">
 <h2>Estimating LDA models with <code>sentopics</code></h2>
 <p>The estimation of an LDA model is easily replicated using the
-<code>LDA()</code> and <code>grow()</code> function. The first function
+<code>LDA()</code> and <code>fit()</code> function. The first function
 prepares the <code>R</code> object and initialize the assignment of the
 latent topics. The second function estimates the model using Gibbs
-sampling for a given number of iterations. Note that <code>grow()</code>
+sampling for a given number of iterations. Note that <code>fit()</code>
 may be used to iterate the model multiple times without resetting the
 estimation.</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">123</span>)</span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>lda <span class="ot">&lt;-</span> <span class="fu">LDA</span>(ECB_press_conferences_tokens)</span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>lda</span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="co"># An LDA model with 5 topics. Currently grown by 0 Gibbs sampling iterations.</span></span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="co"># ------------------Useful methods------------------</span></span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="co"># grow      :Iterates the model using Gibbs sampling</span></span>
-<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a><span class="co"># topics    :Return the most important topic of each document</span></span>
-<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a><span class="co"># topWords  :Return a data.table with the top words of each topic/sentiment</span></span>
-<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a><span class="co"># plot      :A sunburst chart representing the estimated mixtures</span></span>
-<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a><span class="co"># This helpful message is displayed once per session, unless calling `print(x, extended = TRUE)`</span></span>
-<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>lda <span class="ot">&lt;-</span> <span class="fu">grow</span>(lda, <span class="at">iterations =</span> <span class="dv">100</span>)</span>
-<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>lda</span>
-<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a><span class="co"># An LDA model with 5 topics. Currently grown by 100 Gibbs sampling iterations.</span></span></code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">123</span>)</span>
+<span id="cb2-2"><a href="#cb2-2" tabindex="-1"></a>lda <span class="ot">&lt;-</span> <span class="fu">LDA</span>(ECB_press_conferences_tokens)</span>
+<span id="cb2-3"><a href="#cb2-3" tabindex="-1"></a>lda</span>
+<span id="cb2-4"><a href="#cb2-4" tabindex="-1"></a><span class="co"># An LDA model with 5 topics. Currently fitted by 0 Gibbs sampling iterations.</span></span>
+<span id="cb2-5"><a href="#cb2-5" tabindex="-1"></a><span class="co"># ------------------Useful methods------------------</span></span>
+<span id="cb2-6"><a href="#cb2-6" tabindex="-1"></a><span class="co"># fit       :Estimate the model using Gibbs sampling</span></span>
+<span id="cb2-7"><a href="#cb2-7" tabindex="-1"></a><span class="co"># topics    :Return the most important topic of each document</span></span>
+<span id="cb2-8"><a href="#cb2-8" tabindex="-1"></a><span class="co"># topWords  :Return a data.table with the top words of each topic/sentiment</span></span>
+<span id="cb2-9"><a href="#cb2-9" tabindex="-1"></a><span class="co"># plot      :Plot a sunburst chart representing the estimated mixtures</span></span>
+<span id="cb2-10"><a href="#cb2-10" tabindex="-1"></a><span class="co"># This message is displayed once per session, unless calling `print(x, extended = TRUE)`</span></span>
+<span id="cb2-11"><a href="#cb2-11" tabindex="-1"></a>lda <span class="ot">&lt;-</span> <span class="fu">fit</span>(lda, <span class="at">iterations =</span> <span class="dv">100</span>)</span>
+<span id="cb2-12"><a href="#cb2-12" tabindex="-1"></a>lda</span>
+<span id="cb2-13"><a href="#cb2-13" tabindex="-1"></a><span class="co"># An LDA model with 5 topics. Currently fitted by 100 Gibbs sampling iterations.</span></span></code></pre></div>
 <p>Internally, the <code>lda</code> object is stored as a list and
 contains the model’s parameters and outputs.</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(lda, <span class="at">max.level =</span> <span class="dv">1</span>, <span class="at">give.attr =</span> <span class="cn">FALSE</span>)</span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="co"># List of 10</span></span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="co">#  $ tokens       :List of 3860</span></span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="co">#  $ vocabulary   :Classes &#39;data.table&#39; and &#39;data.frame&#39;:   1168 obs. of  3 variables:</span></span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="co">#  $ K            : num 5</span></span>
-<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a><span class="co">#  $ alpha        : num [1:5, 1] 1 1 1 1 1</span></span>
-<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a><span class="co">#  $ beta         : num [1:5, 1:1168] 0.01 0.01 0.01 0.01 0.01 0.01 0.01 0.01 0.01 0.01 ...</span></span>
-<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a><span class="co">#  $ it           : num 100</span></span>
-<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a><span class="co">#  $ za           :List of 3860</span></span>
-<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a><span class="co">#  $ theta        : num [1:3860, 1:5] 0.0455 0.0357 0.0909 0.0667 0.0625 ...</span></span>
-<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a><span class="co">#  $ phi          : num [1:1168, 1:5] 4.32e-07 4.32e-07 4.32e-07 6.47e-03 4.32e-07 ...</span></span>
-<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a><span class="co">#  $ logLikelihood: num [1:100, 1] -943778 -927554 -912671 -893733 -864875 ...</span></span></code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" tabindex="-1"></a><span class="fu">str</span>(lda, <span class="at">max.level =</span> <span class="dv">1</span>, <span class="at">give.attr =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb3-2"><a href="#cb3-2" tabindex="-1"></a><span class="co"># List of 10</span></span>
+<span id="cb3-3"><a href="#cb3-3" tabindex="-1"></a><span class="co">#  $ tokens       :List of 3860</span></span>
+<span id="cb3-4"><a href="#cb3-4" tabindex="-1"></a><span class="co">#  $ vocabulary   :Classes &#39;data.table&#39; and &#39;data.frame&#39;:   1168 obs. of  3 variables:</span></span>
+<span id="cb3-5"><a href="#cb3-5" tabindex="-1"></a><span class="co">#  $ K            : num 5</span></span>
+<span id="cb3-6"><a href="#cb3-6" tabindex="-1"></a><span class="co">#  $ alpha        : num [1:5, 1] 1 1 1 1 1</span></span>
+<span id="cb3-7"><a href="#cb3-7" tabindex="-1"></a><span class="co">#  $ beta         : num [1:5, 1:1168] 0.01 0.01 0.01 0.01 0.01 0.01 0.01 0.01 0.01 0.01 ...</span></span>
+<span id="cb3-8"><a href="#cb3-8" tabindex="-1"></a><span class="co">#  $ it           : num 100</span></span>
+<span id="cb3-9"><a href="#cb3-9" tabindex="-1"></a><span class="co">#  $ za           :List of 3860</span></span>
+<span id="cb3-10"><a href="#cb3-10" tabindex="-1"></a><span class="co">#  $ theta        : num [1:3860, 1:5] 0.0455 0.0357 0.0909 0.0667 0.0625 ...</span></span>
+<span id="cb3-11"><a href="#cb3-11" tabindex="-1"></a><span class="co">#  $ phi          : num [1:1168, 1:5] 4.32e-07 4.32e-07 4.32e-07 6.47e-03 4.32e-07 ...</span></span>
+<span id="cb3-12"><a href="#cb3-12" tabindex="-1"></a><span class="co">#  $ logLikelihood: num [1:100, 1] -943778 -927554 -912671 -893733 -864875 ...</span></span></code></pre></div>
 <p><code>tokens</code> is the initial tokens object used to create the
 model. <code>vocabulary</code> is a data.frame indexing the set of
 words. <code>K</code> is the number of topics. <code>alpha</code> is the
@@ -328,122 +508,126 @@ function to extract the most probable words of each topic.
 <code>data.table</code>/<code>data-frame</code>, <code>matrix</code> or
 <code>ggplot</code> object (also accessible through the alias
 <code>plot_topWords()</code>).</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(lda<span class="sc">$</span>theta)</span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="co">#       topic</span></span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="co"># doc_id     topic1     topic2    topic3     topic4     topic5</span></span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="co">#    1_1 0.04545455 0.04545455 0.7727273 0.04545455 0.09090909</span></span>
-<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="co">#    1_2 0.03571429 0.14285714 0.7500000 0.03571429 0.03571429</span></span>
-<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a><span class="co">#    1_3 0.09090909 0.09090909 0.6363636 0.09090909 0.09090909</span></span>
-<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a><span class="co">#    1_4 0.06666667 0.06666667 0.7333333 0.06666667 0.06666667</span></span>
-<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a><span class="co">#    1_5 0.06250000 0.06250000 0.7500000 0.06250000 0.06250000</span></span>
-<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a><span class="co">#    1_6 0.05263158 0.10526316 0.5789474 0.10526316 0.15789474</span></span>
-<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a><span class="fu">topWords</span>(lda, <span class="at">output =</span> <span class="st">&quot;matrix&quot;</span>)</span>
-<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a><span class="co">#       topic1           topic2       topic3              topic4     </span></span>
-<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a><span class="co">#  [1,] &quot;price&quot;          &quot;fiscal&quot;     &quot;governing_council&quot; &quot;growth&quot;   </span></span>
-<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a><span class="co">#  [2,] &quot;inflation&quot;      &quot;euro_area&quot;  &quot;ecb&quot;               &quot;quarter&quot;  </span></span>
-<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a><span class="co">#  [3,] &quot;development&quot;    &quot;growth&quot;     &quot;meeting&quot;           &quot;loan&quot;     </span></span>
-<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a><span class="co">#  [4,] &quot;annual&quot;         &quot;country&quot;    &quot;president&quot;         &quot;financial&quot;</span></span>
-<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a><span class="co">#  [5,] &quot;increase&quot;       &quot;policy&quot;     &quot;bank&quot;              &quot;euro_area&quot;</span></span>
-<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a><span class="co">#  [6,] &quot;projection&quot;     &quot;reform&quot;     &quot;operation&quot;         &quot;rate&quot;     </span></span>
-<span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a><span class="co">#  [7,] &quot;hicp&quot;           &quot;structural&quot; &quot;outcome&quot;           &quot;sector&quot;   </span></span>
-<span id="cb4-19"><a href="#cb4-19" aria-hidden="true" tabindex="-1"></a><span class="co">#  [8,] &quot;oil&quot;            &quot;market&quot;     &quot;press&quot;             &quot;condition&quot;</span></span>
-<span id="cb4-20"><a href="#cb4-20" aria-hidden="true" tabindex="-1"></a><span class="co">#  [9,] &quot;euro_area&quot;      &quot;economic&quot;   &quot;vice&quot;              &quot;annual&quot;   </span></span>
-<span id="cb4-21"><a href="#cb4-21" aria-hidden="true" tabindex="-1"></a><span class="co"># [10,] &quot;inflation_rate&quot; &quot;measure&quot;    &quot;euro&quot;              &quot;credit&quot;   </span></span>
-<span id="cb4-22"><a href="#cb4-22" aria-hidden="true" tabindex="-1"></a><span class="co">#       topic5           </span></span>
-<span id="cb4-23"><a href="#cb4-23" aria-hidden="true" tabindex="-1"></a><span class="co">#  [1,] &quot;risk&quot;           </span></span>
-<span id="cb4-24"><a href="#cb4-24" aria-hidden="true" tabindex="-1"></a><span class="co">#  [2,] &quot;economic&quot;       </span></span>
-<span id="cb4-25"><a href="#cb4-25" aria-hidden="true" tabindex="-1"></a><span class="co">#  [3,] &quot;monetary&quot;       </span></span>
-<span id="cb4-26"><a href="#cb4-26" aria-hidden="true" tabindex="-1"></a><span class="co">#  [4,] &quot;price_stability&quot;</span></span>
-<span id="cb4-27"><a href="#cb4-27" aria-hidden="true" tabindex="-1"></a><span class="co">#  [5,] &quot;euro_area&quot;      </span></span>
-<span id="cb4-28"><a href="#cb4-28" aria-hidden="true" tabindex="-1"></a><span class="co">#  [6,] &quot;development&quot;    </span></span>
-<span id="cb4-29"><a href="#cb4-29" aria-hidden="true" tabindex="-1"></a><span class="co">#  [7,] &quot;interest_rate&quot;  </span></span>
-<span id="cb4-30"><a href="#cb4-30" aria-hidden="true" tabindex="-1"></a><span class="co">#  [8,] &quot;outlook&quot;        </span></span>
-<span id="cb4-31"><a href="#cb4-31" aria-hidden="true" tabindex="-1"></a><span class="co">#  [9,] &quot;monetary_policy&quot;</span></span>
-<span id="cb4-32"><a href="#cb4-32" aria-hidden="true" tabindex="-1"></a><span class="co"># [10,] &quot;growth&quot;</span></span></code></pre></div>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" tabindex="-1"></a><span class="fu">head</span>(lda<span class="sc">$</span>theta)</span>
+<span id="cb4-2"><a href="#cb4-2" tabindex="-1"></a><span class="co">#       topic</span></span>
+<span id="cb4-3"><a href="#cb4-3" tabindex="-1"></a><span class="co"># doc_id     topic1     topic2    topic3     topic4     topic5</span></span>
+<span id="cb4-4"><a href="#cb4-4" tabindex="-1"></a><span class="co">#    1_1 0.04545455 0.04545455 0.7727273 0.04545455 0.09090909</span></span>
+<span id="cb4-5"><a href="#cb4-5" tabindex="-1"></a><span class="co">#    1_2 0.03571429 0.14285714 0.7500000 0.03571429 0.03571429</span></span>
+<span id="cb4-6"><a href="#cb4-6" tabindex="-1"></a><span class="co">#    1_3 0.09090909 0.09090909 0.6363636 0.09090909 0.09090909</span></span>
+<span id="cb4-7"><a href="#cb4-7" tabindex="-1"></a><span class="co">#    1_4 0.06666667 0.06666667 0.7333333 0.06666667 0.06666667</span></span>
+<span id="cb4-8"><a href="#cb4-8" tabindex="-1"></a><span class="co">#    1_5 0.06250000 0.06250000 0.7500000 0.06250000 0.06250000</span></span>
+<span id="cb4-9"><a href="#cb4-9" tabindex="-1"></a><span class="co">#    1_6 0.05263158 0.10526316 0.5789474 0.10526316 0.15789474</span></span>
+<span id="cb4-10"><a href="#cb4-10" tabindex="-1"></a><span class="fu">topWords</span>(lda, <span class="at">output =</span> <span class="st">&quot;matrix&quot;</span>)</span>
+<span id="cb4-11"><a href="#cb4-11" tabindex="-1"></a><span class="co">#       topic1           topic2       topic3              topic4     </span></span>
+<span id="cb4-12"><a href="#cb4-12" tabindex="-1"></a><span class="co">#  [1,] &quot;price&quot;          &quot;fiscal&quot;     &quot;governing_council&quot; &quot;growth&quot;   </span></span>
+<span id="cb4-13"><a href="#cb4-13" tabindex="-1"></a><span class="co">#  [2,] &quot;inflation&quot;      &quot;euro_area&quot;  &quot;ecb&quot;               &quot;quarter&quot;  </span></span>
+<span id="cb4-14"><a href="#cb4-14" tabindex="-1"></a><span class="co">#  [3,] &quot;development&quot;    &quot;growth&quot;     &quot;meeting&quot;           &quot;loan&quot;     </span></span>
+<span id="cb4-15"><a href="#cb4-15" tabindex="-1"></a><span class="co">#  [4,] &quot;annual&quot;         &quot;country&quot;    &quot;president&quot;         &quot;financial&quot;</span></span>
+<span id="cb4-16"><a href="#cb4-16" tabindex="-1"></a><span class="co">#  [5,] &quot;increase&quot;       &quot;policy&quot;     &quot;bank&quot;              &quot;euro_area&quot;</span></span>
+<span id="cb4-17"><a href="#cb4-17" tabindex="-1"></a><span class="co">#  [6,] &quot;projection&quot;     &quot;reform&quot;     &quot;operation&quot;         &quot;rate&quot;     </span></span>
+<span id="cb4-18"><a href="#cb4-18" tabindex="-1"></a><span class="co">#  [7,] &quot;hicp&quot;           &quot;structural&quot; &quot;outcome&quot;           &quot;sector&quot;   </span></span>
+<span id="cb4-19"><a href="#cb4-19" tabindex="-1"></a><span class="co">#  [8,] &quot;oil&quot;            &quot;market&quot;     &quot;press&quot;             &quot;condition&quot;</span></span>
+<span id="cb4-20"><a href="#cb4-20" tabindex="-1"></a><span class="co">#  [9,] &quot;euro_area&quot;      &quot;economic&quot;   &quot;vice&quot;              &quot;annual&quot;   </span></span>
+<span id="cb4-21"><a href="#cb4-21" tabindex="-1"></a><span class="co"># [10,] &quot;inflation_rate&quot; &quot;measure&quot;    &quot;euro&quot;              &quot;credit&quot;   </span></span>
+<span id="cb4-22"><a href="#cb4-22" tabindex="-1"></a><span class="co">#       topic5           </span></span>
+<span id="cb4-23"><a href="#cb4-23" tabindex="-1"></a><span class="co">#  [1,] &quot;risk&quot;           </span></span>
+<span id="cb4-24"><a href="#cb4-24" tabindex="-1"></a><span class="co">#  [2,] &quot;economic&quot;       </span></span>
+<span id="cb4-25"><a href="#cb4-25" tabindex="-1"></a><span class="co">#  [3,] &quot;monetary&quot;       </span></span>
+<span id="cb4-26"><a href="#cb4-26" tabindex="-1"></a><span class="co">#  [4,] &quot;price_stability&quot;</span></span>
+<span id="cb4-27"><a href="#cb4-27" tabindex="-1"></a><span class="co">#  [5,] &quot;euro_area&quot;      </span></span>
+<span id="cb4-28"><a href="#cb4-28" tabindex="-1"></a><span class="co">#  [6,] &quot;development&quot;    </span></span>
+<span id="cb4-29"><a href="#cb4-29" tabindex="-1"></a><span class="co">#  [7,] &quot;interest_rate&quot;  </span></span>
+<span id="cb4-30"><a href="#cb4-30" tabindex="-1"></a><span class="co">#  [8,] &quot;outlook&quot;        </span></span>
+<span id="cb4-31"><a href="#cb4-31" tabindex="-1"></a><span class="co">#  [9,] &quot;monetary_policy&quot;</span></span>
+<span id="cb4-32"><a href="#cb4-32" tabindex="-1"></a><span class="co"># [10,] &quot;growth&quot;</span></span></code></pre></div>
 <p>In addition, document-level is facilitated through the use of the
 <code>melt()</code> method, that joins estimated topical proportions to
 document metadata present in the <code>tokens</code> input. This result
 in a <em>long</em> <code>data.table</code>/<code>data.frame</code> that
 can be used for plotting or easily reshaped to a wide format (for
 example using <code>data.table::dcast</code>).</p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">melt</span>(lda, <span class="at">include_docvars =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="co">#         topic       prob      .date    .id doc_id</span></span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="co">#     1: topic1 0.04545455 1998-06-09    1_1      1</span></span>
-<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="co">#     2: topic1 0.03571429 1998-06-09    1_2      1</span></span>
-<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a><span class="co">#     3: topic1 0.09090909 1998-06-09    1_3      1</span></span>
-<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a><span class="co">#     4: topic1 0.06666667 1998-06-09    1_4      1</span></span>
-<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a><span class="co">#     5: topic1 0.06250000 1998-06-09    1_5      1</span></span>
-<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a><span class="co">#    ---                                           </span></span>
-<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a><span class="co"># 19296: topic5 0.28947368 2021-12-16 260_20    260</span></span>
-<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a><span class="co"># 19297: topic5 0.10526316 2021-12-16 260_21    260</span></span>
-<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a><span class="co"># 19298: topic5 0.05000000 2021-12-16 260_22    260</span></span>
-<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a><span class="co"># 19299: topic5 0.41025641 2021-12-16 260_23    260</span></span>
-<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a><span class="co"># 19300: topic5 0.14285714 2021-12-16 260_24    260</span></span>
-<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a><span class="co">#                                               title</span></span>
-<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a><span class="co">#     1: ECB Press conference: Introductory statement</span></span>
-<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a><span class="co">#     2: ECB Press conference: Introductory statement</span></span>
-<span id="cb5-17"><a href="#cb5-17" aria-hidden="true" tabindex="-1"></a><span class="co">#     3: ECB Press conference: Introductory statement</span></span>
-<span id="cb5-18"><a href="#cb5-18" aria-hidden="true" tabindex="-1"></a><span class="co">#     4: ECB Press conference: Introductory statement</span></span>
-<span id="cb5-19"><a href="#cb5-19" aria-hidden="true" tabindex="-1"></a><span class="co">#     5: ECB Press conference: Introductory statement</span></span>
-<span id="cb5-20"><a href="#cb5-20" aria-hidden="true" tabindex="-1"></a><span class="co">#    ---                                             </span></span>
-<span id="cb5-21"><a href="#cb5-21" aria-hidden="true" tabindex="-1"></a><span class="co"># 19296:                             PRESS CONFERENCE</span></span>
-<span id="cb5-22"><a href="#cb5-22" aria-hidden="true" tabindex="-1"></a><span class="co"># 19297:                             PRESS CONFERENCE</span></span>
-<span id="cb5-23"><a href="#cb5-23" aria-hidden="true" tabindex="-1"></a><span class="co"># 19298:                             PRESS CONFERENCE</span></span>
-<span id="cb5-24"><a href="#cb5-24" aria-hidden="true" tabindex="-1"></a><span class="co"># 19299:                             PRESS CONFERENCE</span></span>
-<span id="cb5-25"><a href="#cb5-25" aria-hidden="true" tabindex="-1"></a><span class="co"># 19300:                             PRESS CONFERENCE</span></span>
-<span id="cb5-26"><a href="#cb5-26" aria-hidden="true" tabindex="-1"></a><span class="co">#                                                                             section_title</span></span>
-<span id="cb5-27"><a href="#cb5-27" aria-hidden="true" tabindex="-1"></a><span class="co">#     1:          Willem F. Duisenberg, President of the European Central Bank, 9 June 1998</span></span>
-<span id="cb5-28"><a href="#cb5-28" aria-hidden="true" tabindex="-1"></a><span class="co">#     2:          Willem F. Duisenberg, President of the European Central Bank, 9 June 1998</span></span>
-<span id="cb5-29"><a href="#cb5-29" aria-hidden="true" tabindex="-1"></a><span class="co">#     3:          Willem F. Duisenberg, President of the European Central Bank, 9 June 1998</span></span>
-<span id="cb5-30"><a href="#cb5-30" aria-hidden="true" tabindex="-1"></a><span class="co">#     4:          Willem F. Duisenberg, President of the European Central Bank, 9 June 1998</span></span>
-<span id="cb5-31"><a href="#cb5-31" aria-hidden="true" tabindex="-1"></a><span class="co">#     5:          Willem F. Duisenberg, President of the European Central Bank, 9 June 1998</span></span>
-<span id="cb5-32"><a href="#cb5-32" aria-hidden="true" tabindex="-1"></a><span class="co">#    ---                                                                                   </span></span>
-<span id="cb5-33"><a href="#cb5-33" aria-hidden="true" tabindex="-1"></a><span class="co"># 19296: Christine Lagarde, President of the ECB,Luis de Guindos, Vice-President of the ECB</span></span>
-<span id="cb5-34"><a href="#cb5-34" aria-hidden="true" tabindex="-1"></a><span class="co"># 19297: Christine Lagarde, President of the ECB,Luis de Guindos, Vice-President of the ECB</span></span>
-<span id="cb5-35"><a href="#cb5-35" aria-hidden="true" tabindex="-1"></a><span class="co"># 19298: Christine Lagarde, President of the ECB,Luis de Guindos, Vice-President of the ECB</span></span>
-<span id="cb5-36"><a href="#cb5-36" aria-hidden="true" tabindex="-1"></a><span class="co"># 19299: Christine Lagarde, President of the ECB,Luis de Guindos, Vice-President of the ECB</span></span>
-<span id="cb5-37"><a href="#cb5-37" aria-hidden="true" tabindex="-1"></a><span class="co"># 19300: Christine Lagarde, President of the ECB,Luis de Guindos, Vice-President of the ECB</span></span>
-<span id="cb5-38"><a href="#cb5-38" aria-hidden="true" tabindex="-1"></a><span class="co">#         .sentiment</span></span>
-<span id="cb5-39"><a href="#cb5-39" aria-hidden="true" tabindex="-1"></a><span class="co">#     1: -0.01470588</span></span>
-<span id="cb5-40"><a href="#cb5-40" aria-hidden="true" tabindex="-1"></a><span class="co">#     2: -0.02500000</span></span>
-<span id="cb5-41"><a href="#cb5-41" aria-hidden="true" tabindex="-1"></a><span class="co">#     3:  0.00000000</span></span>
-<span id="cb5-42"><a href="#cb5-42" aria-hidden="true" tabindex="-1"></a><span class="co">#     4:  0.00000000</span></span>
-<span id="cb5-43"><a href="#cb5-43" aria-hidden="true" tabindex="-1"></a><span class="co">#     5:  0.00000000</span></span>
-<span id="cb5-44"><a href="#cb5-44" aria-hidden="true" tabindex="-1"></a><span class="co">#    ---            </span></span>
-<span id="cb5-45"><a href="#cb5-45" aria-hidden="true" tabindex="-1"></a><span class="co"># 19296: -0.01960784</span></span>
-<span id="cb5-46"><a href="#cb5-46" aria-hidden="true" tabindex="-1"></a><span class="co"># 19297:  0.00000000</span></span>
-<span id="cb5-47"><a href="#cb5-47" aria-hidden="true" tabindex="-1"></a><span class="co"># 19298:  0.05555556</span></span>
-<span id="cb5-48"><a href="#cb5-48" aria-hidden="true" tabindex="-1"></a><span class="co"># 19299: -0.01052632</span></span>
-<span id="cb5-49"><a href="#cb5-49" aria-hidden="true" tabindex="-1"></a><span class="co"># 19300:  0.00000000</span></span></code></pre></div>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" tabindex="-1"></a><span class="fu">melt</span>(lda, <span class="at">include_docvars =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb5-2"><a href="#cb5-2" tabindex="-1"></a><span class="co">#         topic       prob      .date    .id doc_id</span></span>
+<span id="cb5-3"><a href="#cb5-3" tabindex="-1"></a><span class="co">#        &lt;fctr&gt;      &lt;num&gt;     &lt;Date&gt; &lt;char&gt; &lt;char&gt;</span></span>
+<span id="cb5-4"><a href="#cb5-4" tabindex="-1"></a><span class="co">#     1: topic1 0.04545455 1998-06-09    1_1      1</span></span>
+<span id="cb5-5"><a href="#cb5-5" tabindex="-1"></a><span class="co">#     2: topic1 0.03571429 1998-06-09    1_2      1</span></span>
+<span id="cb5-6"><a href="#cb5-6" tabindex="-1"></a><span class="co">#     3: topic1 0.09090909 1998-06-09    1_3      1</span></span>
+<span id="cb5-7"><a href="#cb5-7" tabindex="-1"></a><span class="co">#     4: topic1 0.06666667 1998-06-09    1_4      1</span></span>
+<span id="cb5-8"><a href="#cb5-8" tabindex="-1"></a><span class="co">#     5: topic1 0.06250000 1998-06-09    1_5      1</span></span>
+<span id="cb5-9"><a href="#cb5-9" tabindex="-1"></a><span class="co">#    ---                                           </span></span>
+<span id="cb5-10"><a href="#cb5-10" tabindex="-1"></a><span class="co"># 19296: topic5 0.28947368 2021-12-16 260_20    260</span></span>
+<span id="cb5-11"><a href="#cb5-11" tabindex="-1"></a><span class="co"># 19297: topic5 0.10526316 2021-12-16 260_21    260</span></span>
+<span id="cb5-12"><a href="#cb5-12" tabindex="-1"></a><span class="co"># 19298: topic5 0.05000000 2021-12-16 260_22    260</span></span>
+<span id="cb5-13"><a href="#cb5-13" tabindex="-1"></a><span class="co"># 19299: topic5 0.41025641 2021-12-16 260_23    260</span></span>
+<span id="cb5-14"><a href="#cb5-14" tabindex="-1"></a><span class="co"># 19300: topic5 0.14285714 2021-12-16 260_24    260</span></span>
+<span id="cb5-15"><a href="#cb5-15" tabindex="-1"></a><span class="co">#                                               title</span></span>
+<span id="cb5-16"><a href="#cb5-16" tabindex="-1"></a><span class="co">#                                              &lt;char&gt;</span></span>
+<span id="cb5-17"><a href="#cb5-17" tabindex="-1"></a><span class="co">#     1: ECB Press conference: Introductory statement</span></span>
+<span id="cb5-18"><a href="#cb5-18" tabindex="-1"></a><span class="co">#     2: ECB Press conference: Introductory statement</span></span>
+<span id="cb5-19"><a href="#cb5-19" tabindex="-1"></a><span class="co">#     3: ECB Press conference: Introductory statement</span></span>
+<span id="cb5-20"><a href="#cb5-20" tabindex="-1"></a><span class="co">#     4: ECB Press conference: Introductory statement</span></span>
+<span id="cb5-21"><a href="#cb5-21" tabindex="-1"></a><span class="co">#     5: ECB Press conference: Introductory statement</span></span>
+<span id="cb5-22"><a href="#cb5-22" tabindex="-1"></a><span class="co">#    ---                                             </span></span>
+<span id="cb5-23"><a href="#cb5-23" tabindex="-1"></a><span class="co"># 19296:                             PRESS CONFERENCE</span></span>
+<span id="cb5-24"><a href="#cb5-24" tabindex="-1"></a><span class="co"># 19297:                             PRESS CONFERENCE</span></span>
+<span id="cb5-25"><a href="#cb5-25" tabindex="-1"></a><span class="co"># 19298:                             PRESS CONFERENCE</span></span>
+<span id="cb5-26"><a href="#cb5-26" tabindex="-1"></a><span class="co"># 19299:                             PRESS CONFERENCE</span></span>
+<span id="cb5-27"><a href="#cb5-27" tabindex="-1"></a><span class="co"># 19300:                             PRESS CONFERENCE</span></span>
+<span id="cb5-28"><a href="#cb5-28" tabindex="-1"></a><span class="co">#                                                                             section_title</span></span>
+<span id="cb5-29"><a href="#cb5-29" tabindex="-1"></a><span class="co">#                                                                                    &lt;char&gt;</span></span>
+<span id="cb5-30"><a href="#cb5-30" tabindex="-1"></a><span class="co">#     1:          Willem F. Duisenberg, President of the European Central Bank, 9 June 1998</span></span>
+<span id="cb5-31"><a href="#cb5-31" tabindex="-1"></a><span class="co">#     2:          Willem F. Duisenberg, President of the European Central Bank, 9 June 1998</span></span>
+<span id="cb5-32"><a href="#cb5-32" tabindex="-1"></a><span class="co">#     3:          Willem F. Duisenberg, President of the European Central Bank, 9 June 1998</span></span>
+<span id="cb5-33"><a href="#cb5-33" tabindex="-1"></a><span class="co">#     4:          Willem F. Duisenberg, President of the European Central Bank, 9 June 1998</span></span>
+<span id="cb5-34"><a href="#cb5-34" tabindex="-1"></a><span class="co">#     5:          Willem F. Duisenberg, President of the European Central Bank, 9 June 1998</span></span>
+<span id="cb5-35"><a href="#cb5-35" tabindex="-1"></a><span class="co">#    ---                                                                                   </span></span>
+<span id="cb5-36"><a href="#cb5-36" tabindex="-1"></a><span class="co"># 19296: Christine Lagarde, President of the ECB,Luis de Guindos, Vice-President of the ECB</span></span>
+<span id="cb5-37"><a href="#cb5-37" tabindex="-1"></a><span class="co"># 19297: Christine Lagarde, President of the ECB,Luis de Guindos, Vice-President of the ECB</span></span>
+<span id="cb5-38"><a href="#cb5-38" tabindex="-1"></a><span class="co"># 19298: Christine Lagarde, President of the ECB,Luis de Guindos, Vice-President of the ECB</span></span>
+<span id="cb5-39"><a href="#cb5-39" tabindex="-1"></a><span class="co"># 19299: Christine Lagarde, President of the ECB,Luis de Guindos, Vice-President of the ECB</span></span>
+<span id="cb5-40"><a href="#cb5-40" tabindex="-1"></a><span class="co"># 19300: Christine Lagarde, President of the ECB,Luis de Guindos, Vice-President of the ECB</span></span>
+<span id="cb5-41"><a href="#cb5-41" tabindex="-1"></a><span class="co">#         .sentiment</span></span>
+<span id="cb5-42"><a href="#cb5-42" tabindex="-1"></a><span class="co">#              &lt;num&gt;</span></span>
+<span id="cb5-43"><a href="#cb5-43" tabindex="-1"></a><span class="co">#     1: -0.01470588</span></span>
+<span id="cb5-44"><a href="#cb5-44" tabindex="-1"></a><span class="co">#     2: -0.02500000</span></span>
+<span id="cb5-45"><a href="#cb5-45" tabindex="-1"></a><span class="co">#     3:  0.00000000</span></span>
+<span id="cb5-46"><a href="#cb5-46" tabindex="-1"></a><span class="co">#     4:  0.00000000</span></span>
+<span id="cb5-47"><a href="#cb5-47" tabindex="-1"></a><span class="co">#     5:  0.00000000</span></span>
+<span id="cb5-48"><a href="#cb5-48" tabindex="-1"></a><span class="co">#    ---            </span></span>
+<span id="cb5-49"><a href="#cb5-49" tabindex="-1"></a><span class="co"># 19296: -0.01960784</span></span>
+<span id="cb5-50"><a href="#cb5-50" tabindex="-1"></a><span class="co"># 19297:  0.00000000</span></span>
+<span id="cb5-51"><a href="#cb5-51" tabindex="-1"></a><span class="co"># 19298:  0.05555556</span></span>
+<span id="cb5-52"><a href="#cb5-52" tabindex="-1"></a><span class="co"># 19299: -0.01052632</span></span>
+<span id="cb5-53"><a href="#cb5-53" tabindex="-1"></a><span class="co"># 19300:  0.00000000</span></span></code></pre></div>
 <p>To ease the result analysis, we can rename the default topic labels
 using the <code>sentopics_labels()</code> function. As a result, all
 outputs of the model will now display the custom labels.</p>
-<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sentopics_labels</span>(lda) <span class="ot">&lt;-</span> <span class="fu">list</span>(</span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">topic =</span> <span class="fu">c</span>(<span class="st">&quot;Inflation&quot;</span>, <span class="st">&quot;Fiscal policy&quot;</span>, <span class="st">&quot;Governing council&quot;</span>, <span class="st">&quot;Financial sector&quot;</span>, <span class="st">&quot;Uncertainty&quot;</span>)</span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(lda<span class="sc">$</span>theta)</span>
-<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a><span class="co">#       topic</span></span>
-<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a><span class="co"># doc_id  Inflation Fiscal policy Governing council Financial sector Uncertainty</span></span>
-<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a><span class="co">#    1_1 0.04545455    0.04545455         0.7727273       0.04545455  0.09090909</span></span>
-<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a><span class="co">#    1_2 0.03571429    0.14285714         0.7500000       0.03571429  0.03571429</span></span>
-<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a><span class="co">#    1_3 0.09090909    0.09090909         0.6363636       0.09090909  0.09090909</span></span>
-<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a><span class="co">#    1_4 0.06666667    0.06666667         0.7333333       0.06666667  0.06666667</span></span>
-<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a><span class="co">#    1_5 0.06250000    0.06250000         0.7500000       0.06250000  0.06250000</span></span>
-<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a><span class="co">#    1_6 0.05263158    0.10526316         0.5789474       0.10526316  0.15789474</span></span>
-<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a><span class="fu">plot_topWords</span>(lda) <span class="sc">+</span> ggplot2<span class="sc">::</span><span class="fu">theme_grey</span>(<span class="at">base_size =</span> <span class="dv">9</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" tabindex="-1"></a><span class="fu">sentopics_labels</span>(lda) <span class="ot">&lt;-</span> <span class="fu">list</span>(</span>
+<span id="cb6-2"><a href="#cb6-2" tabindex="-1"></a>  <span class="at">topic =</span> <span class="fu">c</span>(<span class="st">&quot;Inflation&quot;</span>, <span class="st">&quot;Fiscal policy&quot;</span>, <span class="st">&quot;Governing council&quot;</span>, <span class="st">&quot;Financial sector&quot;</span>, <span class="st">&quot;Uncertainty&quot;</span>)</span>
+<span id="cb6-3"><a href="#cb6-3" tabindex="-1"></a>)</span>
+<span id="cb6-4"><a href="#cb6-4" tabindex="-1"></a><span class="fu">head</span>(lda<span class="sc">$</span>theta)</span>
+<span id="cb6-5"><a href="#cb6-5" tabindex="-1"></a><span class="co">#       topic</span></span>
+<span id="cb6-6"><a href="#cb6-6" tabindex="-1"></a><span class="co"># doc_id  Inflation Fiscal policy Governing council Financial sector Uncertainty</span></span>
+<span id="cb6-7"><a href="#cb6-7" tabindex="-1"></a><span class="co">#    1_1 0.04545455    0.04545455         0.7727273       0.04545455  0.09090909</span></span>
+<span id="cb6-8"><a href="#cb6-8" tabindex="-1"></a><span class="co">#    1_2 0.03571429    0.14285714         0.7500000       0.03571429  0.03571429</span></span>
+<span id="cb6-9"><a href="#cb6-9" tabindex="-1"></a><span class="co">#    1_3 0.09090909    0.09090909         0.6363636       0.09090909  0.09090909</span></span>
+<span id="cb6-10"><a href="#cb6-10" tabindex="-1"></a><span class="co">#    1_4 0.06666667    0.06666667         0.7333333       0.06666667  0.06666667</span></span>
+<span id="cb6-11"><a href="#cb6-11" tabindex="-1"></a><span class="co">#    1_5 0.06250000    0.06250000         0.7500000       0.06250000  0.06250000</span></span>
+<span id="cb6-12"><a href="#cb6-12" tabindex="-1"></a><span class="co">#    1_6 0.05263158    0.10526316         0.5789474       0.10526316  0.15789474</span></span>
+<span id="cb6-13"><a href="#cb6-13" tabindex="-1"></a><span class="fu">plot_topWords</span>(lda) <span class="sc">+</span> ggplot2<span class="sc">::</span><span class="fu">theme_grey</span>(<span class="at">base_size =</span> <span class="dv">9</span>)</span></code></pre></div>
 <p><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAqAAAAGACAMAAABFpiBcAAABy1BMVEUAAAAAADoAAGYAOpAAZmYAZpAAZrYAsPYAv30ZGT8ZGWIZP4EZYmIZYp8aGhozMzM6AAA6ADo6AGY6OmY6OpA6ZrY6kJA6kNs/GRk/GT8/GWI/Pz8/P4E/YmI/Yp8/gYE/gb1NTU1NTW5NTY5Nbm5NbqtNjo5NjshiGRliGT9iGWJiP4FiYhliYj9iYmJin9lmAABmADpmAGZmOgBmOpBmZmZmtv9uTU1uTW5uTY5ubm5ubqtujo5ujqtujshuq6tuq+SBPxmBPz+BP2KBYhmBvZ+BvdmOTU2OTW6OTY6Obm6ObquOjk2Ojm6Ojo6OjquOq6uOq+SOyP+QOgCQOjqQOmaQZgCQtpCQ27aQ2/+fYhmfYj+fgYGfvYGf2Z+f2dmjpQCrbk2rbm6rbo6rjk2rjo6rq26rq8iryKur5Mir5P+2ZgC2Zjq2//+9gT+9n2K9vYG9vb292Z+92dnHx8fIjk3Ijm7Iq27Iq6vI5KvI/8jI///Ly8vZn2LZvYHZ2Z/Z2b3Z2dnbkDrbtmbb///kq27kq47kyI7k5Kvk5OTk/8jk/+Tk///na/Pr6+v4dm3/tmb/yI7/25D/5Kv//7b//8j//9v//+T////O5HEsAAAACXBIWXMAAA7DAAAOwwHHb6hkAAAgAElEQVR4nO2di58cxXHHBU6cSFgn5wkJGN/c+VhsYosQx7JOWKwf0aHIYHtxHggbwsM2PqKLbWmF0Ol1CmvLcEm8LKebPzfdVd09Pe+e3pme7lHVB1Z7s307/dv+bs3szu+qjsQUFB7Hkb4nQEFRFQQohddBgFJ4HQQohdfRHaB7vQdJG4BGApSkea2RACVpXmskQEma1xoJUJLmtUYClKR5rZEAJWleayRASZrXGj0B9PZX3hD3Lh79J3X/J5eT7dYKe5J267GVlZXV/PwLtzSW2Zm0Oo13vs1knayYWTMpVdpxHr4Bqs/49jOXGz1JscKepN16skZpxZYepdVovPNtBuftL59rPOHyCAbQW48/tvLI5Ysrx15nM764snKc3Ry/Le/jo82k9yoNAWXzv8kzzs4KaGNCcD1ufeFpdn9PbuEb+ZDvnSwF25G0Go03j4s7MPPXzu3deoLLWt3befzYT2GJ1EqyXHvsq0ByIp6Le+2cWEu++TcBZVAm9c53zuFqMSH8/jNcLn9NLp7ERxs9Z/+H+GNcC1vFX7PZ7+18AUUhoH/L3ngnUZqQLIbsVB0/u5dWo/HmKhzkxczZ7Q7c3Tm5c3xPLSDe2VkVqRaUPY6riIDC47D5iyEBCpNP0slRAShfsZur+Gij5/QkgzJSV9m67u0JUQjok1wUSkPJMOTOd183O953Jq1GI2ZQxqOYOZsuU8VSKMNRLSDeuXhSrBgo01cRb2FzSOegOqBMbjaDBgsoTyG/Ytni5spqXQa9eXzna6v9SqvReOfbq3AiijPf49MVb74coKkMenNFHgfZNpVH925+LlBAWdY5+tWTt5/m5yh72tlLo+f0BNCL4hz02E9RVMU5KDslMPz80Zm0Wo0X8VM8zHzv1t+cE1vygKbOQY+9Ab+A28Ra8s2vhwJoJ+GxtLKPQjyt9CqtPY08gy7zJSEB2qe0EkB3jhoeJDqT1p5G/mHK7HylUiMBStK81kiAkjSvNRKgJM1rjd0B+r8Q4h8t8lvMNjUf5FqaxQbbJ+lMWp3Gwk3dDMN5EKDtSSNAWx2G8+ga0P9rMa6wqFHnEtD/qIsBAPqny8eVJG5cyUXBpis3CNBWpBGgBCgBSoB2rJAAJUA9APTg/G6JwlABna79MqdJqQwE0KJVqfuFjMahAFoUQQNauLahAbqU8EEAunh+KxrFs83160zWLIo29qdRNOaPnDhxAoe0CegNFstMt0FMI65pHkUTpWskFk9JqwW060kevhmtv7Qdw9yubseLM/jys/X4YPMUmzSb7wLuiIEYiZ7F2Zj9Hg6BzR/JDKo0tgDojeahi1wO0NO78XQyg6VjLw97aUbsBZjgg6FnUPYfW/Xfg67nz8aHb237lkFn4/jgxe05e82nE3Y74zfslq0HmzTOF+/gQLFmcp2mEwEoDIHNLwztEM8VzsdcPss2PHOyt6FIoYMAdHEqGoMuLmzNO0CnEw4YTwjz8cF5lvHx5WfrgehxBXAHB+LccZ3gdwSgcAubB3cOKjLoWGbQuYQzURg0oDzf3BO6PM+g8ezlcSzeTDlAsxl0HmEGPbPPNqs8Gs+fGhygeA4KgPIks77Lzm2i4Rzip+IcdP2DU9HaSxPfANXPQePFN7f5qTObcR7Q7DkorNNI/D4Ogc3XBwfo2YoHgwa0OjwBVGSG+jAemNNIgBKg9oCyDKifU5UHDGQn1BE/k26kMXBADRQaLInhpuaDXEuz2ODd96B1Ggs3PTBupoJ3VkN1PmXQgvSQzxf1Q25kXgdvL3XWSSVACdDWNRKgBCgBSoB2I40A9Q7Q5LsK3exzbb/wOwwCNDhA9W9lggRUhX5N7ODCfuEYApQAdQ2osseg2QevYUyj0YG8L5wxtm6mGmNLFwH+H3FBcFNcYUkeAqvWLlq05EPGbiYLG4+ZwaeLlwDcTPfgymBs6WbqRkJjQKVPBq+j8fsX+CF+Lq/usi04OIgMiv4fAegoFte1IVCd2AhjMtIGkkGFPDBtgbdC1xhgBpVXecXl9zUBqO6P0RV6Dij6f5SlAlUkj63BRrRozZLLMIMCFOWB6sWPEvlDAHQ2zmXQ0ADF5UBbD5OjZ1BUN9M8QgPNoPIliOdfYjdDyqAL9PhscSd2rHm0dYWeA4r+H7T1zLQTTb5koE5sjCb4oy5tIICiPDRtsY8QUn6QgDaKMABdQtpQAK3SOHxADewRNuwZDbKceL3tp2TvFhvILFI+DOdBgLYnjQBtdRjOo7dDfPXhgG+yUefHId78+G18iM8cKDuTltFoeGC/ccVkuQhQArRtjQQoAUqAlmzDeRCg1tII0H4BvZr/GGv0l1fX9nWFAwH02n7eSDEQQCvNaAMEVJmbcC/DAJSJGiqg1WY0bwGdyr+4HutVfxLXEthe+O14yu1L6AkSRid+LaLezdSrgac8xEUlYWw6fHv34MXtgwvvRCMuNm3UKge0DftSB69KZr3wFs1omRpODdxMXS9XMaDzkaxZMdOr/iTX3MH2wm4PtiZYGAgNMXhpHp8D3wahZVAswqGMTUz55mQ+5hn09K7xtXhPM2hmvcSagpUiX8MJNfqaQWdY9Qd8LlrVn5RrCW5ZiuHLqHmCAgdU1Dsaq/JFv333LIjK2wzCAzS9XmJNEdBcDSfU6Cug7M3F3lDCeZVU/clmUClYGGKGAKjIoNLYdPjWtz7+2Q/2BwYorpdYUw3QcDIoOzNZ29wWPpek6k/2HFQKFn4fBHRrY19TGBqgWWMTO9hP2bJtbdwbEKBiYXFNwYyWr+GEGr0FtF5qbeBeQgPUqIwRPn1wgDYSjxqHD2gNQw02Ocug9fWOSvZuscEvs4guvmzCD4pZpCRJVEw8oCtJpfPzHNC8xqrcWamLADUY1LE0ArRCFwFqMKhjaQRohS4C1GBQx9II0ApdBKjBoI6lEaAVuvwFNPM9xSAAvZbxU+DThw6oWKmMKShtRiNAQwA0Z/jBpw8dUBFpQDMXAsMEVCvDJG7xKktRO7YyQH1yMCVR3IVtGo1mm+vfn+DXvwZupl41FIdqCoiVpubquqByrRWa0aoAdTNxC0CxSpFqUMZvZUeofDOhoDJoSRc2llVmgOzMsHBD6fz6y6CqKSB6mHgPPXRWKNdaoRktzAwKVYr0NmVJq51cO7agAC3pwsYBHceHb1837ZNUOr8eAZVNAYXz7JTypknXWqHXJ0hAsUpRClBZ22gAGbSgCxsCCq4uXVpYgMqmgLI42OLMR5BBlWttOIBilSIdUNGyrKgdW1CAlnRhO9jaeJ+toXKiBQmobAqIHqapOgdVrrVCM1qQgBoG7iUsQCuD51ddWliAGth7UoH7Gj6glqB5COgsqdZUsneLDb4D2gl5hsNwHj1l0LR9MAhAc9JKE6g6EngEqKXGigRafAhUR0ICtH5Qx9IIUAJ0uUEdSyNACdDlBnUsjQD1DtBGTcdxL4EDqjeEykoLH9D8Jyd5rSxQQBsF7iV8QEulEaDeAapqpICr4v10j6u5+EtWuCxRZxbp3RZSEfidtrK+iH47G+8Ym0X6N70Yhq4UF3bGL9ebmUW6KtCTCbtGXuCqiNI9rrj/AH/Gwfg2CDCD4lVBLNwg2plAlytjs0g4GVTV35C2n9kPZVLFfQWYQeGCGLoq0j2uuP9A/KwpDBFQ9FWAZwQBBbnmZpFwAMXGXZr5Z2behsZrQNFVke1xtTjzO+1PynEvIQJamEHnI2OzSDiAQuMu3fwDRjxNY6iAgqvi5+keV1NVTUVXGCKgheeg67vGZpFwAIXGXbr5B5t2JhoDA7RR4F5CBLTksrWxWSQYQKsC90WAmk+8b0BzZhECdAiAWoLmy/egjaRZbPAd0GZItTsM59FHBrWbuHeAFqfPyvkFB2h5Aq3RRYAaDOpYGgFaoYsANRjUsTQCtEIXAWowqGNpBGiFrl4BzTgoKjtBBQzotLQjNz79QAC1bORVo8ujDFrdCSpcQCu8hfj0wwDUtpFXjS63gKbqpoxkP68xlop5BzpB6ZaYuMbN1Mbr2lmo6jBT+RfIbMsHqgVWrZup18mXhtb6ApdOLea0cvnKAXU1czNA9bopU9nPCy+LzV6APiZzWe4g0+0quAyqqsMoUbzsjWyBpUsLKIPqzYNQHdbywVo3FcsXSgZVdVOkxQdtS+AVQYV6wRhdYXiASo+WEsW2JA1cNGkBAaq3XxNdvMaihFH18oUCqKqbojIoVkvhLp+n9LfgIADNdC0bAKCpDCodaKJUUeXyhQKoXjdFnYNGE3D5XIdOULFWtFBXGCKgma5lAwA0ew4awbsOSxVVLl8ogKbtE2Z/O4d7CQ5Qk8CnDwlQiEbVRXBfQQI6V65rA4WWoIUAqCVbS/+OS0A7Ic9wGM6D3EztSfMd0DY0Dg7QB+wQXzO/4AAtO8Anvs8SXQSowaCOpRGgBOhygzqWRoASoMsN6lgaARoCoPjJsOiLJ9xLOIBmu3XlNxzU/118zfy8ATSnLRe4r6EAWq4wGEBzrp68zWc4gJZZmLTAfQ0A0Oe3oo19Wb/oHl6rCM3NNIe2Arxb1wfqz/65S0v8rbju4qpxM/Uqoya0i0W8XZfWtEx5tXKltcoAddd4bWlAT+9i7xmsX3Q6ez0wiAwKba1kty5ROIW7tASgyvgTdAbVL7czsXrTMunVypfWGkAGRcHCPoJ+GV1hEIBCWytohqSVnjpQgCrjT9CA6oYlpi3dtAydBvnSWgMCFJxNXwozg0JbKwQU+3cJl5ZqUFbYoywwQOdagzKRQWXTMgmozC2JxgEBCs6mD+Q5aBwUoNDWCrp1Yf8u6dL6GH5KjD9BAxprDcp4u66kaVni1cqV1gof0HTon+lxL0EA2jTw6UMD1Ebj8AG1BC0EQC3ZWvp3XALaCXmGw3Ae5GZqTxoB2uownAdd6rSWVnCEz9R4y/UgDQ7QskO8zdoQoNktHUsjQJutDQGa3dKxNAK02doQoNktHUsjQJutjQ+A6o3ZcC/hA5r0tlIeIHx6ArTZ2vgAaJyz/AwJUOUBwqcnQJutTc+A6k0xQnMzaZFy9kBdpp/zMjGiWlOqC1sBoA46r7UYqZJbY/B0zfFKUq2byd0k2wJUbyuEW/BtEFoGVc4eNDAxNnnzNVGtaWAZNFVyCzok/Z7/r2scTgbVG7PpCoMDVF2XBgMTVGoayWpNQwNUldwCedzTxf/XNQ4H0MFkUGU9AwMTFEwT/rvBnYMmJbcElNzhZNbIy2ZtvDoHjYMHFA1MAChbM6zWtLWhL174gOoltyJoFTg1dDPZrI0nn+JV4F5CA7SBtPABrSqFg/saPqCWoIUAqCVbS/+OS0A7Ic9wGM6jhwx6JRe5TnpFm5oM0hV2Ji2XPHPTqd9wJczvQZcjz3AYzoMAtZZGgFqSZzgM50GAWksjQC3JMxyG8yBAraURoJbkGQ7DeRCg1tIIUEvyDIfhPAhQo0gXn8KnHw6g5aW1CNBAAC2SNhxAyzUGAiiYXTKFipKHNENMLB+qcjOVWn7aiyYrkfTM29fbraWrFsniU/ulbiYHM+0irm7zohVSnWltJocTNAFUtJWThYrwsjs+pDw/akx9pzm/MqjWM29Ta7c2T1ctksWnxpq0QWRQpnOm1G2a1mZaLjUaDsN5mAAqzC6yUBEal5LHhOcHyvrAj7pC7wHVeubp1YsyVYtU7zJN2iAAPTh/HfwT+AKY1mZajjzDYTgPowwq28phoSI9gyrPj+pfFlwGTXrmRVr9t3m6apEsPjXSpA0C0Hj28jiW6qLkPRgUoGh2OZSFimLtHFR5fnAM/qgr9B5QrWferlZBM05XLZLFp3Y1acMAdPHN7VipM63NtBx5hsNwHvQp3lraMACt1hguoCxXRsn5ZrnC/ATMZmn5e6ktltLqo2TvFht6dTPZaGyDPMNhOA/HGVRkEZuJewdoNoGm8mPx/IIDtDiB6oepEl0EqMGgjqURoBW6CFCDQR1LI0ArdBGgBoM6lkaAVujqFtDEPDBd+6W6f22/plF8ujsU7oUAbaiKAG2SQfW/0qxt/pQZgHshQBuqIkDNMihaJqbR+nUGKHxpPY1GB/K+MFRAKPvINBrlO0FlAPXEIpGLbC8rEMTrwKQsMmlpKUB9M4EYRokNqMYs4lJiKaBgmcAMKtpYXeCH+LlmqMDBSZ+rC/v5TlCBZNBMLysUxOvApCwyaWkDyKAVNiDcl8cZVLaXEZfB1gSguqECByd9ri7s590GoQCa6WUFgqAWjLLI5KQNANAKGxDuKwxARRsrPYOmAVUD8p2gQgM0bXpZnLmnLDI5aQMAtMIGhPsKA1DRxmpr4yN1DpoGVA3Yz7kNQgNUN71MsxaZaGiH+AobEO7LU0BbCdxLIIDaSBsCoHUagwa0xi+CeyFAG6oiQN1mUEvQQgDUkq2lf8cloJ2QZzgM50GAtieNAG11GM6jO0AxTng4qKWo35fBbFp5ku7CcOcdDiNArYMAdTGMALUOAtTFsK4BpaBYKghQCq+DAKXwOghQCq+jW0CnVX+YDFZoHKHf6nH4ZoQezapBMfZOqRnUdpTvolaXgapeJOWidp9TuJJYM0GDddaGZZ9QAPrps0cwHr60rCot5hv7840yH/6c1+nAEfp/6TFgr6kfxG1W1YPajvJd1OuqV9WLpLySun2iJ7hmgibrLIcVPGGSQd97lN3c/eyyqvSYjQtro0Ic/oLbh3CEfpt/kkn9oMzDVfttKUp3YairVpV7Sbmo3efBP5/CTmAVEzR8PXBYwRMqQD997pK6bStmEzCxlQRMHEbot9lRUB+wZtA0Ghs8U6tRsQsTXbWqepCUi9p9zte50roJmq0zbCt4QgXo/Vcgg37mw6V1JVH9FjR6Z01HsVGaHfuSQY10mahyLikXRvucj+smaHiklNBmnjA5xN9/hZ2CtnqErzmJgbdM9bnJ4ZuTOK49UeV/czL25hy0Xle9ql4k5aJ2nzDNSd0EDdZZDcs/YY+f4uEtU/3pbop/CFT/KX7k0af4Wl0GqnqRlAuTT/Hj2gkarLM2LPuEmXNQCgq/IjkH/fGrfc6DgqIwkgz6bPvfg1JQLBt0qZPC6yBAKbyOzNdMrX4NSkGxdHT6RT0FxbLR3aXOvd6jLSUPkjTvorsM2vcaEqCDiO7OQfteQwJ0ENHdp/i+15AAHURoX9S3axQZ8ir2LeyBBDSO/3DkyEMtXu7sew0J0EFE+hB//5X2LnX2vYYE6CBCA/Qu+5D0aHvP3PcaEqCDiH7OQW89trKysnr7K2+UPK4eKR7yk8v9rqLR3vduPcluLp4sfEwqSPQZaupamneRPgd1lUFh7UyiENDbz4QOaF6BqaaupXkXma+Z7ro5B0VAGX23Hn9s5ZHLexdXVo7vifs7KyuP/IZxCdsQ0JsrKyf5z6t78Oj32APw6M7jx8pycKeraAaRAFSTdRk0sFn/nVSgXoKLK8cZy8Zv3M6keRcaoJ983l0GZYf4Y2/w1Xni8p3vnGPrwm/x/hNsMb/IHoFtCOhr5/Z+ffM4o/MkPvrMZf7TxZM7x/tZxWaAJrIeBw1s1ixfKn34OG7ZKT4hIEBjfg7ask+kdu0gfTwJ+LH0cvQc3r+5io/gNgSU8bzKfmTpBx995jJfyZurO6v9rKIZRCDyNV0WamCz5gd0qQ8fZ1vufPf10pNyZ9K8i36uJGUAZUuGeZSvJ0s1Nz/3lTdwmzwHvfXEf63iv/xRlUG9BpTPXUmEia/AfBFQpU8BurfztWo9LqR5F14AyjLk0a+eTLLpMZZKcBsCelGcg7JbePRpOJs7vuc3oPzUeQXPK4WsN0ADB/TpR34l9QlAmabbXz5n+MwEaAth+lp3F6FJ41m2b2neBQHqjbSdo8YJlABtIbpZxSZB0gYQBChJ8zoIUJLmdTjvNDeEdmwDluZdEKAkzevoGtA/aSP0NsJXsn2FizY4AfR/mgQ2ByZAGwcBai2NAHURBKi1NALURRCg1tIIUBfRJqDX9hdnk5+GA6ioqD6bpKURoC6iRUAPLgwUUBEEaB9hBejhm9H6S9uzzfVdXkv98O3dgxe3Dy68E40Wz29FUB//xAnRU7kdQJtGiy8QU3n9/O48iiazyWykS2sEaKtzepDCClDeIeTFbbZc2DNtNplvTuZjnkFP72KzsHgwGXQGTd+ubse/n/1QHh8og7oLK0Cn7GB3dXsGrabi+Xhx9rfvnr26LQ7xVwcGKLTrWZyKxjPeeEOTRoC6iGUy6Fhk0MO3vvXxz36wP2RA43hx5v1JWhoB6iKWOQcdy34+7DA4Zeu4tXFvqIBO4Rx0cWZfk0aAugjrDFrbI28ggJZLI0BdhG0G5Q3BqmOpBfB7FQcszbvo+UpSmKuIu2iQPUsz/xXfpHkXBKi1NALURRCg1tIIUBdBgFpLI0BdBAFqLY0AdRGtAXot26J+UICmv1UjQN1FW4AeXBg0oEXSCFAXYQPolF9HElc14VLSbHP9++yfKf92lHuczN1MrWqxC5h1PIuijX0Qs9g8xR1ZeP/5rWg8ZT/yDApDbNxMjnxXwwwLQOcjfiUeAWW3h29xXxPLoPzCvLCk8Qgkg+Ks+UXM2SY4C9hdJgldBovTuwdbE3aH+0X4kLEmjTKoi7AAdDYRaPIMytLKGr8qzwBld1kymslLTIEAirOej4Uw7s0Cq5a8f/j2LgI6T66dEaDuwi6DshTDEgo6mngGBUBxBUMDFGfN0+M8wqwJgM7lfQUoDBlp0ghQF2F3Drq2uY2OpsWpaO2lyQysTPwULpqEBmgMs+aJFP8+INZPrnVAcYgmjQB1EZaf4qWnriJCAdQiCFB30TWglguw9O84AHSQ0ryLPq8kBbuKuIvG+RMyqOfSvAsC1FoaAeoiCFBraQSoiyBAraURoC5iSUAr/jQJX83AAc1ZYDRpBKiLIEAr5eUsMJo0AtRFtAAo/umxbrQwNIssPfl2QjlC4oxZZMxuRokdZgLf4Tc2i5A7ZKlYHtDkoiBc/2xQ+sY0ZXScZpQjZJ4xi8wmWIsC7TDsjiwfhrugDOoilgcUbRXoGmlWWcR0RboGVF7PTJlFwEPCD/HSDnP49nV5PoO7IEBdRFsZFF0jYQM6180iYCngHi1ph4lnL6dtBgSoi2jrHBRdI2EDGmfMItGEV/ORdhhugo11aQSoi6DvQY1DVmYiQF0GAWoaszVlkMFdEKAughp5kTSvo88MqrIKj5BWEXdRnztv1OZL76R5FwSotTQC1EUQoNbSCFAXQYBaSyNAXUQTQKdrvyz1hijXyEH6coungJaaXKR9CTs+sWH4X9rWhLsgQF1EA0Drq36nRuGr6SmgpbO/kAJU6UnbmnAXBKiLaADoNOItrVKVYfA+rwnzkbykhAtq5GZy7/LhxqWR6M2lqt3IC5i8WZeyL+FIlUHZ9mljNxN5l1qIZhkU6xfgRXdlXoKaMC+wR2Cb1xl0cRpMIUCeqnYjPUq8WZeyL+FIBShub+hmogzaQjQHVCt5o/kqRGWDNc8BPcv9StikBKvdgGlJPHhKsy8tfsRH6oA2dzMRoC2EJaC6eQlqwjx1fhe3+Q0oZtCxzKDzdLOSxZmPpH2JP5rOoM3dTARoC2EJaMq8xGvCXId2gWyb34DiOehYJnyodhOJA/dUty/x02vtHJRX9mnsZiJAW4gH63tQvV1442jsZiJAW4gHyyxSDChL/RE/76zWk3Mz+SVtqPFgAUrSgoseD/FXUof4lGmybkvJBreA1h7hQ5TmXRCg1tIIUBdBgFpLI0BdBAFqLY0AdREEqLU0AtRFEKDW0ghQF2EEKFh+xDXOTdFrIHkI7EG7aAuSD5m4mar6W9mFhf4lpNUB2re0YYQJoKLXFa7iKMYCHPiQqlykxpjXZvIhgy4jjTKoizABFC0/yiUiijGpx6BykbAFzZIrMkEAuow0AtRFGGVQ2esKO3fpaUZVLlJdvALLoEtII0BdhOk5aDTBzl0z7WwsjmPVyAvH4I/4UBCALiONAHUR9CneWhoB6iJsAa13ACWvZir8d1QMWFqAQW4mkuZ1+HWID2QVcReVR/fSw7Xn0rwLAtRaGgHqIghQa2kEqIsgQK2lEaAuok1A023ZPAa0oJm4UV0fKZAAdRctApppyzY8QJVAAtRdLA+oMgGJukZwYdDSzbT0ZAxiyq8a4UQZqIszWJ4paVcCfzqf6j43FkWopnCVycTNRLak1qIFQEfC+MMSzFwrdeRpBmVTPHhRNJJjt3DDe8qplnlQfCTVfW4mus9RBu0hWgB0LIw/vOuVVurIU0D5+0c1kjt//fyuvLubNJqDW9F9TrM7EaA9RCuAiqpMLINqpY48BZSlRN6KEyfKyy2JnnKZDKq6z6HdiQDtK1oBVFRl2oJym5Hfh3h2Urm2KRrJxYtvbguzUvYcVO8+FwlHMxeoSSNAXQR9D5oJk/JNBKi7ILNIJswBDU5akNFXBr1SvQB+ryLuoiJ1hivNuyBAraURoC6CALWWRoC6CALUWhoB6iIIUGtpBKiLaA3QtJUp9hrQxBmSm3XJ1iKjFgHqItoCNGNlir0GtGLWxVsLjVoEqIuwBpT3ZRPmJd6y7R3Zoo2bmwzcTL26eg5kwzxlwFIlmGS7OYhqo1YRoGRZajusAeV92ZTVJ569gFYmaOOGgW93LzOoapinDFiqBJNoN4fjqo1alEFdhDWgvC8bWn2w09yFfXQDzdLdrrwFVNo/UIMqwSTbzUFUG7UIUBexxDno4szvZGWjeP6UyqCBAaoqL0knFrSbw7vVRi0C1EVYAzoV56DsFjrNoZUJ2rhh4KvpOaDSgKVKMIl2c0hotVGLAHUR9D2otTQC1EWQm6koasozhSwttOgng1a25vR/FXEXFRlUJNEApXkXBKi1NALURRCg1tIIUBdBgFpLI0BdxFKAXt3mtotr+4VlOfDVDBfQnCx5HYkAdRlLAhqXGS6CB5TJIkA9CKQvkvQAAAXhSURBVGNAuSMEv4pHnwWWkGFrOI1Gyd/s4kO1ZhFf7RQoAr7D12UJGwz6DEzMIuQXaS1MAQVHyCaWNgCfBZaQYWuIqWauPYS/gW/3oDKoECGvgipZ4iLuD+UffOIuKIO6CFNA4VJ0Uhzm6jaWkFGA6g/hb+CrGRSgughdlriN0kYtAtRFNMmg80jLMFhCJptBwwZUHQb4sSGfQSdXaxt5EaBtR5NzUOHeFRRCCRkO6NbGR+ocNGxAUQS29dJlyXNQ/i5NpBGgLoK+B7WWRoC6CALUWhoB6iLIzUTSvI5eMugVPW7oOSeMVcRdVCZQKa1mmt5J8y4IUGtpBKiLIECtpRGgLoIAtZZGgLqI1gFVDgt8Nb0GtLjwTUZNgVULd0GAuogHGdAyH1aRmlTgLghQF2EDqGZcErfy2hLbjkta7WZy2eIq1ZJLs2JFY1nQBsr1fH+iin9jGwWlhguC4j5iRJWbifp2tR4WgGI1GDQuiVsAVFSJ8SyDplpyaVYs3rzrwj7OGUvcSL8nNqLB4QgoWLmeP1tf+oYyaOthk0GhGoyCUt2KKjG+AapaculWLGzexQ7xMGdePuTt63Li2MoLhyOgYOXSRuAuCFAXYQEoVoNJAQr+H1ElxldAdb+VaN51YR/nDDWYXpYlUYoz6HyUjMBdEKAuwuYQD9VgdEDR/yOqxPgKaJy2YmGJm3swZw4oe4dJfYXnoOu7yQjcBQHqIuh7UBHSSlfeKSkZgbsgQF0EmUUwZmvbsuDNu8WAzpJKOGFJCzsIUJLmdfRxiNeP50GuIu6i9ghf2Kuz8ZDMBgK0rSBACdAWggC1lkaAuggC1FoaAeoi2gRUlmrCnwYF6LV9/csnAtRdtAtorFmEhgQoXrVXQYC6iyUA5Raf92UDLL1UU1zjZvLZ5YMXxWQHr8O3d6GGwzvRiF9fSpedygNa7NJqN3p9dXoIe0DB4hPJBlh6qSZ8PMwMOhtzHaKvF3eYzDcnc24rWZzezZSdogzqIuwBxWpNsgGWXqoJHw8T0Cno4LKE+em3756FQk35oikEqItYLoPOI9kASy/VhI+HCajIoGORQQ/f+tbHP/vBPgHaWyx3Drr+c9kASy/VpBcwCg1QcQ46Fm4m3q5zypjd2rhHgPYS9D1oOngGLfw7pLw0AtRFkFkkHSyDypaxQ5MWZhCgJM3r6A5QjBMtjGjnSVqPAUvzKAhQ6xiwNI+CALWOAUvzKLoGlIJiqSBAKbwOApTC6yBAKbwOApTC6+gW0GmU/DF5OuB6Ij6s3ybBL+lAGbryIVPuAagc0WEMWJpX0Smg8439+UZhDc55tL4rHtb/00dgj7eKIXOoTFP5JN3FgKX5FZ0CWuq8OPwFr5eED+u32d+f1AzJPGbk9GgnBizNr+gW0AkU7ioKWEV4WL9Nj5mPaoZMo3Htk3QUA5bmV/STQcUqVmeI6SiuzUSzsW8ZNHxpfkVP56CwipXnWIdvTtQzlJyo8aqeY+/OQYOX5lf09Skejlc1n2OxjnzlkJGHn+KDl+ZV0PegFF4HAUrhdRCgFF4HAUrhdRCgFF4HAUrhdRCgncb9V4482vccwg4CtNP45M8v9T2FwIMA7TI+ffbIQ//2F//w8CV25+FL8PMf//hVTi3/Hzd+8pf/euTIN3Dsq+99g/38Yd/T9ikI0E6DcfjJ5xl97z0a3/0sO+Czfx5SgOLGTz7/aPyHz3x4/5VvsH/+m92ncwI9CNBOgwPKc+Xfvxp/+twl9h+/KwAVG8VPeDLw6dc//M9X+560V0GAdhoS0GePHGEHcH70vq8O8XKjABSO7Pd//O9fpyO8HgRopyEBfQ4+K2UyKG5MZdD47j/SET4VBGinIcl7D84z4azzoVf5sf3uw5fERgEoPwflo/+MjvCpIEA7DQkofESHf/6I03nkyF8/d0ls1D7Ts5/u/wt9L5UKAtRx8PRZEZ/8lauJBBIEqOOoBvTuQ3SETwcBSuF1EKAUXgcBSuF1EKAUXgcBSuF1/D8Rw2ymeQ+YpQAAAABJRU5ErkJggg==" style="display: block; margin: auto;" /></p>
 <p>Besides modifying topic labels, it is also possible to merge topics
 into a greater thematic. This is often useful when estimating a large
 number of topics (e.g, K &gt; 15). The <code>mergeTopics()</code> does
 this job and re-label topics accordingly.</p>
-<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>merged <span class="ot">&lt;-</span> <span class="fu">mergeTopics</span>(lda, <span class="fu">list</span>(</span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>  <span class="st">`</span><span class="at">Big big thematic</span><span class="st">`</span> <span class="ot">=</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">3</span><span class="sc">:</span><span class="dv">5</span>),</span>
-<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>  <span class="st">`</span><span class="at">Fical policy</span><span class="st">`</span> <span class="ot">=</span> <span class="dv">2</span></span>
-<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>))</span>
-<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>merged</span>
-<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a><span class="co"># An LDA model with 2 topics. Currently grown by 100 Gibbs sampling iterations.</span></span></code></pre></div>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" tabindex="-1"></a>merged <span class="ot">&lt;-</span> <span class="fu">mergeTopics</span>(lda, <span class="fu">list</span>(</span>
+<span id="cb7-2"><a href="#cb7-2" tabindex="-1"></a>  <span class="st">`</span><span class="at">Big big thematic</span><span class="st">`</span> <span class="ot">=</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">3</span><span class="sc">:</span><span class="dv">5</span>),</span>
+<span id="cb7-3"><a href="#cb7-3" tabindex="-1"></a>  <span class="st">`</span><span class="at">Fical policy</span><span class="st">`</span> <span class="ot">=</span> <span class="dv">2</span></span>
+<span id="cb7-4"><a href="#cb7-4" tabindex="-1"></a>))</span>
+<span id="cb7-5"><a href="#cb7-5" tabindex="-1"></a>merged</span>
+<span id="cb7-6"><a href="#cb7-6" tabindex="-1"></a><span class="co"># An LDA model with 2 topics. Currently fitted by 100 Gibbs sampling iterations.</span></span></code></pre></div>
 <p>Note that merging topics is only useful for presentation purpose.
-Using again <code>grow</code> on a model with merged topics will
+Using again <code>fit</code> on a model with merged topics will
 drastically change the results as the current state of the model does
 not results from a standard estimation with the merged set of
 parameters.</p>
@@ -451,7 +635,7 @@ parameters.</p>
 also directly use <code>plot()</code> on the estimated topic model to
 enjoy a dynamic view of topic proportions and their most probable words
 (presented as a screenshot hereafter to limit this vignette’s size).</p>
-<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(lda)</span></code></pre></div>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" tabindex="-1"></a><span class="fu">plot</span>(lda)</span></code></pre></div>
 </div>
 </div>
 

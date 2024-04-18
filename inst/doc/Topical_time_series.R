@@ -1,4 +1,4 @@
-## ---- include = FALSE---------------------------------------------------------
+## ----include = FALSE----------------------------------------------------------
 knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#",
@@ -23,7 +23,7 @@ xts_sent <- sentiment_series(lda, period = "month", rolling_window = 6)
 plot(xts_sent)
 
 ## ----eval = FALSE-------------------------------------------------------------
-#  lda <- grow(lda, 1000)
+#  lda <- fit(lda, 1000)
 #  sentopics_labels(lda) <- list(
 #    topic = c(
 #      "Economic growth & Inflation", "Banking", "Payment services",
@@ -35,7 +35,7 @@ plot(xts_sent)
 #  plot(lda)
 
 ## ----include=FALSE------------------------------------------------------------
-lda <- grow(lda, 1000)
+lda <- fit(lda, 1000)
 sentopics_labels(lda) <- list(
   topic = c(
     "Economic growth & Inflation", "Banking", "Payment services",

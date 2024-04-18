@@ -73,12 +73,12 @@
 #'
 #' # for JST models, sentiment can be computed from the output of the model
 #' jst <- JST(ECB_press_conferences_tokens, lexicon = LoughranMcDonald)
-#' jst <- grow(jst, 100)
+#' jst <- fit(jst, 100)
 #' sentopics_sentiment(jst, override = TRUE) # replace existing sentiment
 #'
 #' ## for rJST models one sentiment value is computed by topic
 #' rjst <- rJST(ECB_press_conferences_tokens, lexicon = LoughranMcDonald)
-#' rjst <- grow(rjst, 100)
+#' rjst <- fit(rjst, 100)
 #' sentopics_sentiment(rjst, override = TRUE)}
 sentopics_sentiment <- function(x,
                       method = c("proportional", "proportionalPol"),
@@ -324,7 +324,7 @@ sentopics_labels <- function(x, flat = TRUE) {
 
   if (is.null(value)) {
     attr(x, "labels") <- NULL
-    x <- grow(x, 0, displayProgress = FALSE)
+    x <- fit(x, 0, displayProgress = FALSE)
     return(x)
   }
 
@@ -347,7 +347,7 @@ sentopics_labels <- function(x, flat = TRUE) {
   }
 
   ## force update of labels on theta phi ect..
-  x <- grow(x, 0, displayProgress = FALSE)
+  x <- fit(x, 0, displayProgress = FALSE)
 
   ## manually adjust stored sentiment in docvars (if any)
   docvars <- attr(x$tokens, "docvars")
@@ -390,7 +390,7 @@ sentopics_labels <- function(x, flat = TRUE) {
 #' sentiment_series(rjst)
 #'
 #' sentopics_sentiment(rjst) <- NULL ## remove existing sentiment
-#' rjst <- grow(rjst, 10) ## estimating the model is then needed
+#' rjst <- fit(rjst, 10) ## estimating the model is then needed
 #' sentiment_series(rjst)
 #'
 #' # note the presence of both raw and scaled sentiment values
@@ -520,7 +520,7 @@ sentiment_series <- function(x,
 #' @seealso sentopics_sentiment sentopics_date
 #' @examples
 #' \donttest{lda <- LDA(ECB_press_conferences_tokens)
-#' lda <- grow(lda, 100)
+#' lda <- fit(lda, 100)
 #' sentiment_breakdown(lda)
 #'
 #' # plot shortcut
@@ -528,7 +528,7 @@ sentiment_series <- function(x,
 #'
 #' # also available for rJST models (with topic-level sentiment)
 #' rjst <- rJST(ECB_press_conferences_tokens, lexicon = LoughranMcDonald)
-#' rjst <- grow(rjst, 100)
+#' rjst <- fit(rjst, 100)
 #' sentopics_sentiment(rjst, override = TRUE)
 #' plot_sentiment_breakdown(rjst)}
 sentiment_breakdown <- function(x,
@@ -792,7 +792,7 @@ plot_sentiment_breakdown <- function(x,
 #' @export
 #' @examples
 #' \donttest{lda <- LDA(ECB_press_conferences_tokens)
-#' lda <- grow(lda, 100)
+#' lda <- fit(lda, 100)
 #' sentiment_topics(lda)
 #'
 #' # plot shortcut
@@ -802,7 +802,7 @@ plot_sentiment_breakdown <- function(x,
 #'
 #' # also available for rJST models with internal sentiment computation
 #' rjst <- rJST(ECB_press_conferences_tokens, lexicon = LoughranMcDonald)
-#' rjst <- grow(rjst, 100)
+#' rjst <- fit(rjst, 100)
 #' sentopics_sentiment(rjst, override = TRUE)
 #' sentiment_topics(rjst)}
 sentiment_topics <- function(x,
@@ -955,7 +955,6 @@ sentiment_topics <- function(x,
     plot_data <- topical_sent[, lapply(.SD, nafill, type = "locf")]
     plot_data <- stats::na.omit(melt(plot_data, id.vars = "date"))
 
-    # if (plot_ridgelines & length(missingSuggets("ggridges")) == 0) {
     if (plot_ridgelines) {
       plot_data <- plot_data[, list(date, value = value / max(abs(value)), variable)]
 
@@ -969,8 +968,6 @@ sentiment_topics <- function(x,
         ggplot2::xlab("Date")
     } else {
 
-      # if (plot_ridgelines) message("Package `ggridges` is missing. Defaulting to standard ggplot.")
-
       p_topical_sent <-
         ggplot2::ggplot(plot_data, ggplot2::aes(date, value, color = variable)) +
         ggplot2::geom_line(linewidth = 1.5) +
@@ -979,9 +976,6 @@ sentiment_topics <- function(x,
         ggplot2::scale_color_manual(values = make_colors(x, "L1")) +
         # ggplot2::scale_y_continuous(expand = c(0,0), labels = function(breaks) sprintf("%.f%%", breaks * 100) ) +
         ggplot2::scale_x_date(expand = c(0,0)) +
-        ggplot2::theme_bw() +
-        # ggplot2::geom_line(ggplot2::aes(date, cum_value, group = variable),
-        #                    inherit.aes = FALSE) +
         ggplot2::ylab("Topical sentiment") +
         ggplot2::xlab("Date") +
         ggplot2::facet_wrap(. ~variable)
@@ -1035,7 +1029,7 @@ plot_sentiment_topics <- function(x,
 #' @seealso sentopics_sentiment sentopics_date
 #' @examples
 #' \donttest{lda <- LDA(ECB_press_conferences_tokens)
-#' lda <- grow(lda, 100)
+#' lda <- fit(lda, 100)
 #' proportion_topics(lda)
 #'
 #' # plot shortcut
@@ -1045,7 +1039,7 @@ plot_sentiment_topics <- function(x,
 #'
 #' # also available for rJST and JST models
 #' jst <- JST(ECB_press_conferences_tokens, lexicon = LoughranMcDonald)
-#' jst <- grow(jst, 100)
+#' jst <- fit(jst, 100)
 #' # including both layers
 #' proportion_topics(jst)
 #' # or not
@@ -1272,7 +1266,7 @@ sentopicmodel_params <- function(x) {
   c(
     x[c("L1", "L2",
         # "L1prior", "L2prior", "beta",
-        "initLDA", "smooth", "initType", "L1cycle", "L2cycle")],
+        "L1cycle", "L2cycle")],
     attributes(x)[c("reversed", "Sdim")],
     L1_name = ifelse(attr(x, "reversed") == TRUE, "topic", "sentiment"),
     L2_name = ifelse(attr(x, "reversed") == FALSE, "topic", "sentiment")
