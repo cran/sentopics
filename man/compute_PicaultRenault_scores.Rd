@@ -12,7 +12,7 @@ compute_PicaultRenault_scores(x, min_ngram = 2, return_dfm = FALSE)
 \item{min_ngram}{the minimum length of n-grams considered in the computation}
 
 \item{return_dfm}{if \code{TRUE}, returns the scaled word-per-document score under
-two \link{dfm}, on for the Monetary Policy and one for the Economic Condition
+two \link[quanteda:dfm]{quanteda::dfm}, on for the Monetary Policy and one for the Economic Condition
 categories. If \code{FALSE}, returns the sum of all word scores per document.}
 }
 \value{
@@ -45,8 +45,11 @@ compute_PicaultRenault_scores(docs)
 compute_PicaultRenault_scores(ECB_press_conferences)}
 }
 \references{
-Picault, M. & Renault, T. (2017). \href{https://www.sciencedirect.com/science/article/abs/pii/S0261560617301808}{Words are not all created equal: A new measure of ECB communication}.
+Picault, M. & Renault, T. (2017). Words are not all created
+equal: A new measure of ECB
+communication.
 \emph{Journal of International Money and Finance}, 79, 136--156.
+\doi{10.1016/j.jimonfin.2017.09.005}
 }
 \seealso{
 \link{PicaultRenault}
