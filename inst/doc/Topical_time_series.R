@@ -23,16 +23,16 @@ xts_sent <- sentiment_series(lda, period = "month", rolling_window = 6)
 plot(xts_sent)
 
 ## ----eval = FALSE-------------------------------------------------------------
-#  lda <- fit(lda, 1000)
-#  sentopics_labels(lda) <- list(
-#    topic = c(
-#      "Economic growth & Inflation", "Banking", "Payment services",
-#      "European single market", "Monetary policy & Negative rate",
-#      "Monetary policy & Price stability", "Others", "Banking supervision",
-#      "Financial markets"
-#    )
-#  )
-#  plot(lda)
+# lda <- fit(lda, 1000)
+# sentopics_labels(lda) <- list(
+#   topic = c(
+#     "Economic growth & Inflation", "Banking", "Payment services",
+#     "European single market", "Monetary policy & Negative rate",
+#     "Monetary policy & Price stability", "Others", "Banking supervision",
+#     "Financial markets"
+#   )
+# )
+# plot(lda)
 
 ## ----include=FALSE------------------------------------------------------------
 lda <- fit(lda, 1000)
@@ -46,9 +46,9 @@ sentopics_labels(lda) <- list(
 )
 
 ## ----eval = FALSE, include=FALSE----------------------------------------------
-#  suppressWarnings({
-#    plotly::save_image(plot(lda), file = "plotly2.svg")
-#  })
+# suppressWarnings({
+#   plotly::save_image(plot(lda), file = "plotly2.svg")
+# })
 
 ## ----echo = FALSE-------------------------------------------------------------
 knitr::include_graphics("plotly2.svg")

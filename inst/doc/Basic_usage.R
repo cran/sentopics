@@ -45,12 +45,12 @@ merged <- mergeTopics(lda, list(
 merged
 
 ## ----eval=FALSE---------------------------------------------------------------
-#  plot(lda)
+# plot(lda)
 
 ## ----eval=FALSE, include=FALSE------------------------------------------------
-#  suppressWarnings({
-#    plotly::save_image(plot(lda), file = "plotly1.svg")
-#  })
+# suppressWarnings({
+#   plotly::save_image(plot(lda), file = "plotly1.svg")
+# })
 
 ## ----include=FALSE------------------------------------------------------------
 knitr::include_graphics("plotly1.svg")
