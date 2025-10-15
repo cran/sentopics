@@ -1,9 +1,9 @@
-89d3dffe0efcddc3bad0ae544bd7cf1a *DESCRIPTION
+1e2ed14c40ab85e8c3c6515e40645986 *DESCRIPTION
 422b72dc5ff34d58581b414cd51be678 *NAMESPACE
-2a8803f36d8f5b2e54594b3f81a78142 *NEWS.md
+3853dc702a967ede219424dcab37e377 *NEWS.md
 28d511e4abc55c526680005748679280 *R/RcppExports.R
 1d8e4e5b3af3345fed3c1caa83e31a95 *R/coherence.R
-72662a8202335eb1ed119f57af29e70a *R/conversions.R
+3e6f3dcb4c16fdc0b7b9ec44e860f6d3 *R/conversions.R
 ff94148ce3d624dcb2d9d74ffbba26e5 *R/functions.R
 ce32d0f2f71621385e5c9406c02888c7 *R/generators.R
 a3974791b319494074f30f623ffe69d9 *R/merging.R
@@ -36,7 +36,7 @@ ee2bdd914980dfab060283933ef3118f *man/JST.Rd
 a5392ec0eb33c0bc29271516f36221c7 *man/LoughranMcDonald.Rd
 3813f265404313f9f77f3c36c9da2184 *man/PicaultRenault.Rd
 d7ea79755e7f0c25e5a2b2c9cd7632f3 *man/PicaultRenault_data.Rd
-2f70f724848b568dc8a43bdc697f5a81 *man/as.LDA.Rd
+781359954631c2bf9b04f61a91334640 *man/as.LDA.Rd
 e0f229ba9350b0c2f96a859e2af7b699 *man/as.tokens.dfm.Rd
 0248bb6570b9279b9212abcb539a3be4 *man/chainsDistances.Rd
 ec58773edec7c7f1c649948940c58398 *man/chainsScores.Rd
@@ -77,7 +77,7 @@ e2c157375f5e943b9d5cb0ea92426944 *src/math_func.h
 d53379540e7fdb8cb4ba4743277d6187 *src/model.h
 475f963d8870b26fd6a2fa382884356a *src/polya_fit_simple.cpp
 d4f81901c986ab3b2c352c7879ae2c0a *src/polya_fit_simple.h
-47f3006491849c517c096b2e26a0972f *tests/testthat.R
+61ec38ac820035941a0471ef0e045fc4 *tests/testthat.R
 81ace45a1d83c29c02b66a2caff05775 *tests/testthat/Rplots.pdf
 98f615980088e53219f9f46d06a77216 *tests/testthat/test-JST.R
 72241b7981fc2778127bc98e62facda5 *tests/testthat/test-LDA.R
