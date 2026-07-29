@@ -6,6 +6,7 @@ knitr::opts_chunk$set(
   fig.height = 4,
   fig.align = "center"
 )
+data.table::setDTthreads(2)
 
 ## ----message=FALSE------------------------------------------------------------
 library("xts")
